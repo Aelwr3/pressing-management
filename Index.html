@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="ar">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>إدارة المصبنة</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <header>
+        <h1>إدارة المصبنة</h1>
+    </header>
+    <main>
+        <section id="customer-info">
+            <h2>إدخال بيانات الزبون</h2>
+            <form id="customer-form">
+                <label for="customer-name">اسم الزبون:</label>
+                <input type="text" id="customer-name" name="customer-name" required>
+                <label for="total-items">عدد القطع:</label>
+                <input type="number" id="total-items" name="total-items" required>
+                <button type="submit">حفظ</button>
+            </form>
+        </section>
+        <section id="item-info" style="display:none;">
+            <h2>إدخال تفاصيل القطع</h2>
+            <form id="item-form">
+                <label for="item-type">نوع القطعة:</label>
+                <input type="text" id="item-type" name="item-type" required>
+                <label for="item-price">سعر القطعة:</label>
+                <input type="number" id="item-price" name="item-price" required>
+                <button type="submit">إضافة القطعة</button>
+            </form>
+            <div id="items-list"></div>
+        </section>
+    </main>
+    <script src="script.js"></script>
+</body>
+</html>
