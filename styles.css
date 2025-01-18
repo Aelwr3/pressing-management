@@ -1,5 +1,7 @@
+@import url('https://fonts.googleapis.com/css2?family=Cairo:wght@700&display=swap');
+
 body {
-    font-family: Arial, sans-serif;
+    font-family: 'Cairo', sans-serif;
     margin: 0;
     padding: 0;
     background-color: #f9f9f9;
@@ -12,21 +14,60 @@ header {
     padding: 1em;
 }
 
+.decorated-title {
+    font-family: 'Cairo', sans-serif;
+    font-size: 2.5em;
+    color: #FFF;
+    background-color: #4CAF50;
+    padding: 0.5em 1em;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    text-shadow: 2px 2px #666;
+    transition: transform 0.3s;
+}
+
+.decorated-title:hover {
+    transform: scale(1.05);
+}
+
 main {
     padding: 2em;
+}
+
+.category-list {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.category-item {
+    background-color: #4CAF50;
+    color: white;
+    padding: 1em;
+    margin: 1em;
+    border-radius: 5px;
+    cursor: pointer;
+    width: 200px;
+    text-align: center;
+    transition: background-color 0.3s, transform 0.3s;
+}
+
+.category-item:hover {
+    background-color: #45a049;
+    transform: scale(1.05);
 }
 
 form {
     margin: 1em 0;
 }
 
-label, input {
+label, input, select, button {
     display: block;
     margin: 0.5em 0;
+    width: 100%;
 }
 
 button {
-    margin-top: 1em;
     padding: 0.5em 1em;
     background-color: #4CAF50;
     color: white;
