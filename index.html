@@ -3,44 +3,33 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>إدارة المصبنة</title>
+    <title>إدارة المصبنة - مصبنة مشاء الله</title>
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
     <header>
-        <h1>إدارة المصبنة</h1>
+        <h1 class="decorated-title">مصبنة مشاء الله</h1>
     </header>
     <main>
-        <section id="customer-info">
-            <h2>إدخال بيانات الزبون</h2>
-            <form id="customer-form">
-                <label for="customer-name">اسم الزبون:</label>
-                <input type="text" id="customer-name" name="customer-name" required>
-                <label for="total-items">عدد القطع:</label>
-                <input type="number" id="total-items" name="total-items" required>
-                <button type="submit">حفظ</button>
-            </form>
+        <section id="categories">
+            <h2>اختر الفئة</h2>
+            <div class="category-list">
+                <div class="category-item" onclick="showItems('women')">ملابس النساء</div>
+                <div class="category-item" onclick="showItems('men')">ملابس الرجال</div>
+                <div class="category-item" onclick="showItems('kids')">ملابس الأطفال</div>
+                <div class="category-item" onclick="showItems('bedding')">الأفرشة</div>
+                <div class="category-item" onclick="showItems('shoes')">الأحذية</div>
+            </div>
         </section>
         <section id="item-info" style="display:none;">
             <h2>إدخال تفاصيل القطع</h2>
-            <label for="item-category">فئة القطعة:</label>
-            <select id="item-category" name="item-category" required>
-                <option value="">اختر الفئة</option>
-                <option value="ملابس النساء">ملابس النساء</option>
-                <option value="ملابس الرجال">ملابس الرجال</option>
-                <option value="ملابس الأطفال">ملابس الأطفال</option>
-                <option value="الأفرشة">الأفرشة</option>
-                <option value="الأحذية">الأحذية</option>
+            <label for="item-type">نوع القطعة:</label>
+            <select id="item-type" name="item-type" required>
+                <!-- الخيارات ستتغير بناءً على الفئة المختارة -->
             </select>
-            <form id="item-form" style="display:none;">
-                <label for="item-type">نوع القطعة:</label>
-                <select id="item-type" name="item-type" required>
-                    <!-- الخيارات ستتغير بناءً على الفئة المختارة -->
-                </select>
-                <label for="item-price">سعر القطعة:</label>
-                <input type="number" id="item-price" name="item-price" required>
-                <button type="submit">إضافة القطعة</button>
-            </form>
+            <label for="item-price">سعر القطعة:</label>
+            <input type="number" id="item-price" name="item-price" required>
+            <button onclick="addItem()">إضافة القطعة</button>
             <div id="items-list"></div>
         </section>
     </main>
