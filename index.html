@@ -23,9 +23,20 @@
         </section>
         <section id="item-info" style="display:none;">
             <h2>إدخال تفاصيل القطع</h2>
-            <form id="item-form">
+            <label for="item-category">فئة القطعة:</label>
+            <select id="item-category" name="item-category" required>
+                <option value="">اختر الفئة</option>
+                <option value="ملابس النساء">ملابس النساء</option>
+                <option value="ملابس الرجال">ملابس الرجال</option>
+                <option value="ملابس الأطفال">ملابس الأطفال</option>
+                <option value="الأفرشة">الأفرشة</option>
+                <option value="الأحذية">الأحذية</option>
+            </select>
+            <form id="item-form" style="display:none;">
                 <label for="item-type">نوع القطعة:</label>
-                <input type="text" id="item-type" name="item-type" required>
+                <select id="item-type" name="item-type" required>
+                    <!-- الخيارات ستتغير بناءً على الفئة المختارة -->
+                </select>
                 <label for="item-price">سعر القطعة:</label>
                 <input type="number" id="item-price" name="item-price" required>
                 <button type="submit">إضافة القطعة</button>
