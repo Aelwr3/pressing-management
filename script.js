@@ -5,37 +5,60 @@ function showItems(category) {
 
     if (category === 'women') {
         options = [
-            { value: 'سروال', text: 'سروال - 10 دراهم', price: 10 },
-            { value: 'قميص', text: 'قميص - 5 دراهم', price: 5 },
-            { value: 'فستان', text: 'فستان - 20 دراهم', price: 20 }
+            { value: 'سروال', text: 'سروال' },
+            { value: 'قميص', text: 'قميص' },
+            { value: 'فستان', text: 'فستان' },
+            { value: 'حجاب', text: 'حجاب' },
+            { value: 'شال', text: 'شال' },
+            { value: 'سترة', text: 'سترة' },
+            { value: 'تنورة', text: 'تنورة' },
+            { value: 'بلوزة', text: 'بلوزة' },
+            { value: 'عباية', text: 'عباية' },
+            { value: 'ملابس رياضية', text: 'ملابس رياضية' }
             // أضف المزيد من الخيارات هنا
         ];
     } else if (category === 'men') {
         options = [
-            { value: 'سروال', text: 'سروال - 12 دراهم', price: 12 },
-            { value: 'جاكيت', text: 'جاكيت - 15 دراهم', price: 15 },
-            { value: 'قميص', text: 'قميص - 7 دراهم', price: 7 }
+            { value: 'سروال', text: 'سروال' },
+            { value: 'جاكيت', text: 'جاكيت' },
+            { value: 'قميص', text: 'قميص' },
+            { value: 'بذلة', text: 'بذلة' },
+            { value: 'ملابس رياضية', text: 'ملابس رياضية' },
+            { value: 'بلوفر', text: 'بلوفر' },
+            { value: 'سترة', text: 'سترة' },
+            { value: 'بنطال', text: 'بنطال' }
             // أضف المزيد من الخيارات هنا
         ];
     } else if (category === 'kids') {
         options = [
-            { value: 'بنطال', text: 'بنطال - 8 دراهم', price: 8 },
-            { value: 'تيشيرت', text: 'تيشيرت - 5 دراهم', price: 5 },
-            { value: 'فستان', text: 'فستان - 15 دراهم', price: 15 }
+            { value: 'بنطال', text: 'بنطال' },
+            { value: 'تيشيرت', text: 'تيشيرت' },
+            { value: 'فستان', text: 'فستان' },
+            { value: 'جاكيت', text: 'جاكيت' },
+            { value: 'ملابس رياضية', text: 'ملابس رياضية' },
+            { value: 'بجامة', text: 'بجامة' },
+            { value: 'بلوفر', text: 'بلوفر' },
+            { value: 'سروال', text: 'سروال' }
             // أضف المزيد من الخيارات هنا
         ];
     } else if (category === 'bedding') {
         options = [
-            { value: 'بطانية', text: 'بطانية - 30 دراهم', price: 30 },
-            { value: 'وسادة', text: 'وسادة - 15 دراهم', price: 15 },
-            { value: 'ستارة', text: 'ستارة - 25 دراهم', price: 25 }
+            { value: 'بطانية', text: 'بطانية' },
+            { value: 'وسادة', text: 'وسادة' },
+            { value: 'ستارة', text: 'ستارة' },
+            { value: 'سجادة صغيرة', text: 'سجادة صغيرة' },
+            { value: 'سجادة كبيرة', text: 'سجادة كبيرة' },
+            { value: 'غطاء سرير', text: 'غطاء سرير' },
+            { value: 'مفرش طاولة', text: 'مفرش طاولة' },
+            { value: 'منشفة', text: 'منشفة' },
+            { value: 'ملاءة سرير', text: 'ملاءة سرير' }
             // أضف المزيد من الخيارات هنا
         ];
     } else if (category === 'shoes') {
         options = [
-            { value: 'حذاء رياضي', text: 'حذاء رياضي - 20 دراهم', price: 20 },
-            { value: 'حذاء رسمي', text: 'حذاء رسمي - 25 دراهم', price: 25 },
-            { value: 'حذاء نسائي', text: 'حذاء نسائي - 15 دراهم', price: 15 }
+            { value: 'حذاء رياضي', text: 'حذاء رياضي' },
+            { value: 'حذاء رسمي', text: 'حذاء رسمي' },
+            { value: 'حذاء نسائي', text: 'حذاء نسائي' }
             // أضف المزيد من الخيارات هنا
         ];
     }
@@ -44,7 +67,6 @@ function showItems(category) {
         const optionElement = document.createElement('option');
         optionElement.value = option.value;
         optionElement.textContent = option.text;
-        optionElement.setAttribute('data-price', option.price);
         itemTypeSelect.appendChild(optionElement);
     });
 
@@ -54,7 +76,7 @@ function showItems(category) {
 document.getElementById('item-type').addEventListener('change', function() {
     const selectedOption = this.options[this.selectedIndex];
     const price = selectedOption.getAttribute('data-price');
-    document.getElementById('item-price').value = price;
+    document.getElementById('item-price').value = price || '';
 });
 
 function addItem() {
@@ -67,12 +89,4 @@ function addItem() {
 }
 
 function displayItems() {
-    const items = JSON.parse(localStorage.getItem('items')) || [];
-    const itemsList = document.getElementById('items-list');
-    itemsList.innerHTML = '';
-    items.forEach((item, index) => {
-        const itemElement = document.createElement('div');
-        itemElement.innerHTML = `القطعة ${index + 1}: ${item.itemType} - ${item.itemPrice} درهم`;
-        itemsList.appendChild(itemElement);
-    });
-}
+    const
