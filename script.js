@@ -1,3 +1,27 @@
+const validCode = "202501";
+
+function validateCode() {
+    const entryCode = document.getElementById('entry-code').value;
+    if (entryCode === validCode) {
+        document.getElementById('code-entry').style.display = 'none';
+        document.getElementById('main-content').style.display = 'block';
+    } else {
+        document.getElementById('error-message').style.display = 'block';
+    }
+}
+
+function showPage(pageId) {
+    const sections = document.querySelectorAll('main > section');
+    sections.forEach(section => {
+        section.style.display = 'none';
+    });
+    document.getElementById(pageId).style.display = 'block';
+}
+
+function showCategories() {
+    showPage('categories');
+}
+
 const customItems = {
     women: [],
     men: [],
@@ -105,4 +129,22 @@ function displayItems() {
         itemElement.innerHTML = `القطعة ${index + 1}: ${item.itemType} - ${item.itemPrice} درهم`;
         itemsList.appendChild(itemElement);
     });
+}
+
+function showSummary() {
+    const items = JSON.parse(localStorage.getItem('items')) || [];
+    const summaryList = document.getElementById('summary-list');
+    const totalPriceElement = document.getElementById('total-price');
+    let totalPrice = 0;
+
+    summaryList.innerHTML = '';
+    items.forEach((item, index) => {
+        const itemElement = document.createElement('div');
+        itemElement.innerHTML = `القطعة ${index + 1}: ${item.itemType} - ${item.itemPrice} درهم`;
+        summaryList.appendChild(itemElement);
+        totalPrice += parseFloat(item.itemPrice);
+    });
+
+    totalPriceElement.innerHTML = `المجموع الكلي: ${totalPrice} درهم`;
+    showPage('summary');
 }
