@@ -171,7 +171,7 @@
     </div>
 
     <script>
-        let customers = [];
+        let customers = JSON.parse(localStorage.getItem("customers")) || [];
 
         // إضافة الزبون
         function addCustomer() {
@@ -180,6 +180,9 @@
 
             if (customerName !== "") {
                 customers.push(customerName);
+
+                // حفظ الزبون في localStorage
+                localStorage.setItem("customers", JSON.stringify(customers));
 
                 // تحديث القائمة
                 updateCustomerList();
@@ -224,6 +227,10 @@
         // حذف الزبون
         function deleteCustomer(index) {
             customers.splice(index, 1);
+            
+            // تحديث localStorage
+            localStorage.setItem("customers", JSON.stringify(customers));
+
             updateCustomerList();
             document.getElementById("customerSelect").removeChild(document.getElementById("customerSelect").childNodes[index + 1]);
         }
@@ -233,10 +240,26 @@
             const selectedCustomer = document.getElementById("customerSelect").value;
 
             if (selectedCustomer) {
+                // حفظ اسم الزبون الذي تم اختياره في localStorage
+                localStorage.setItem("selectedCustomer", selectedCustomer);
                 window.location.href = "f_categories.html";
             } else {
                 alert("من فضلك اختر زبونًا أولاً.");
             }
+        }
+
+        // عند تحميل الصفحة، إذا كانت هناك بيانات في localStorage، يتم تحديث القائمة
+        window.onload = function() {
+            updateCustomerList();
+            const customerSelect = document.getElementById("customerSelect");
+
+            // تحديث القائمة المنسدلة بالقيم المحفوظة
+            customers.forEach(customer => {
+                const option = document.createElement("option");
+                option.value = customer;
+                option.textContent = customer;
+                customerSelect.appendChild(option);
+            });
         }
     </script>
 </body>
