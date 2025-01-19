@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>اختيار الزبون أو إضافة زبون جديد</title>
+    <title>اختيار أو إضافة زبون</title>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&family=Pacifico&display=swap" rel="stylesheet">
     <style>
         body {
@@ -11,7 +11,7 @@
             background-color: #f1f1f1;
             margin: 0;
             padding: 0;
-            background: linear-gradient(to bottom, #1e3a8a, #3b82f6); /* اللون الأزرق */
+            background: linear-gradient(to bottom, #1e3a8a, #3b82f6);
             color: white;
             text-align: center;
             animation: fadeIn 1s ease-out;
@@ -28,83 +28,94 @@
 
         h1 {
             font-family: 'Pacifico', cursive;
-            font-size: 48px;
-            margin-bottom: 30px;
+            font-size: 40px;
+            margin-bottom: 20px;
             color: #ffffff;
             text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.2);
         }
 
-        .options-box {
+        .code-box, .customer-box {
             background-color: #ffffff;
             color: #1e3a8a;
-            padding: 25px;
-            border-radius: 15px;
+            padding: 20px;
+            border-radius: 10px;
             border: 2px solid #1e3a8a;
-            width: 100%;
-            max-width: 400px;
-            margin-bottom: 20px;
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            width: 300px;
             animation: slideIn 1s ease-out;
+            margin-bottom: 20px;
         }
 
-        .options-box button {
-            padding: 12px 25px;
-            background-color: #1e3a8a;
-            color: white;
+        .code-box input, .customer-box input {
             border: none;
-            border-radius: 10px;
-            font-size: 20px;
-            cursor: pointer;
+            padding: 10px;
+            font-size: 18px;
             width: 100%;
-            transition: background-color 0.3s ease;
-            margin-bottom: 15px;
+            margin-bottom: 10px;
+            border-radius: 5px;
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
         }
 
-        .options-box button:hover {
+        .submit-btn, .add-customer-btn, .choose-customer-btn {
+            padding: 10px 20px;
+            background-color: #1e3a8a;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            font-size: 18px;
+            cursor: pointer;
+            width: 100%;
+            transition: background-color 0.3s ease;
+            margin-bottom: 10px;
+        }
+
+        .submit-btn:hover, .add-customer-btn:hover, .choose-customer-btn:hover {
             background-color: #2563eb;
         }
 
-        .customer-list {
-            margin-top: 30px;
-            background-color: #ffffff;
-            padding: 20px;
-            border-radius: 15px;
-            width: 100%;
-            max-width: 400px;
-            border: 2px solid #1e3a8a;
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-            animation: slideIn 1s ease-out;
+        .emoji {
+            font-size: 50px;
+            margin-top: 20px;
         }
 
-        .customer-list div {
+        .error-message {
+            color: red;
+            font-size: 16px;
+            margin-top: 10px;
+            font-weight: bold;
+        }
+
+        .customer-list {
+            margin-top: 20px;
+            text-align: left;
+            color: #333;
+            background-color: #fff;
+            padding: 10px;
+            border-radius: 5px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            width: 300px;
+        }
+
+        .customer-item {
+            margin-bottom: 10px;
+            font-size: 16px;
             display: flex;
             justify-content: space-between;
             align-items: center;
-            margin: 10px 0;
-            padding: 10px;
-            background-color: #f1f1f1;
-            border-radius: 10px;
         }
 
         .delete-btn {
-            background-color: red;
-            border: none;
+            background-color: #ff4757;
             color: white;
+            border: none;
             border-radius: 5px;
             padding: 5px 10px;
             cursor: pointer;
-            font-size: 16px;
-            transition: background-color 0.3s ease;
+            font-size: 14px;
+            transition: background-color 0.3s;
         }
 
         .delete-btn:hover {
-            background-color: darkred;
-        }
-
-        .emoji {
-            font-size: 60px;
-            margin-top: 20px;
+            background-color: #ff6b81;
         }
 
         @keyframes fadeIn {
@@ -126,51 +137,106 @@
                 opacity: 1;
             }
         }
-
     </style>
 </head>
 <body>
     <div class="container">
         <h1>مصبنة مشاء الله</h1>
-        <div class="emoji">🧺✨</div> <!-- إيموجي للشعار أو الزخرفة -->
-        
-        <!-- خيارات إضافة الزبون أو اختياره -->
-        <div class="options-box">
-            <button onclick="addCustomer()">إضافة زبون جديد</button>
-            <button onclick="selectCustomer()">اختيار زبون موجود</button>
-        </div>
-        
-        <!-- عرض الزبائن المحفوظين -->
-        <div class="customer-list">
-            <h3>الزبائن المحفوظين:</h3>
-            <div id="customer-1">
-                <span>محمد 👕</span>
-                <button class="delete-btn" onclick="deleteCustomer('customer-1')">حذف</button>
-            </div>
-            <div id="customer-2">
-                <span>أمينة 👗</span>
-                <button class="delete-btn" onclick="deleteCustomer('customer-2')">حذف</button>
-            </div>
+        <div class="emoji">🧺✨</div>
+
+        <!-- إضافة الزبون -->
+        <div class="customer-box">
+            <h2>إضافة زبون جديد</h2>
+            <input type="text" id="customerName" placeholder="أدخل اسم الزبون" />
+            <button class="add-customer-btn" onclick="addCustomer()">إضافة الزبون</button>
         </div>
 
-        <div class="emoji">🔄</div> <!-- إيموجي للتبديل -->
+        <!-- اختيار الزبون -->
+        <div class="customer-box">
+            <h2>اختر زبون</h2>
+            <select id="customerSelect">
+                <option value="">اختر الزبون</option>
+            </select>
+            <button class="choose-customer-btn" onclick="goToNextPage()">انتقل إلى الفئات</button>
+        </div>
+
+        <!-- قائمة الزبائن -->
+        <div class="customer-list" id="customerList">
+            <h3>الزبائن المسجلين</h3>
+        </div>
+
+        <div id="error-message" class="error-message" style="display:none;">
+            <span>🚫 فشل في إضافة الزبون! حاول مرة أخرى.</span>
+        </div>
     </div>
 
     <script>
-        // وظيفة لإضافة زبون جديد
+        let customers = [];
+
+        // إضافة الزبون
         function addCustomer() {
-            window.location.href = "f_categories.html";  // الانتقال إلى صفحة الفئات
+            const customerName = document.getElementById("customerName").value;
+            const errorMessage = document.getElementById("error-message");
+
+            if (customerName !== "") {
+                customers.push(customerName);
+
+                // تحديث القائمة
+                updateCustomerList();
+
+                // إضافة الزبون إلى القائمة المنسدلة
+                const option = document.createElement("option");
+                option.value = customerName;
+                option.textContent = customerName;
+                document.getElementById("customerSelect").appendChild(option);
+
+                // مسح الحقل بعد إضافة الزبون
+                document.getElementById("customerName").value = "";
+            } else {
+                // إظهار رسالة الخطأ إذا لم يتم إدخال اسم الزبون
+                errorMessage.style.display = "block";
+            }
         }
 
-        // وظيفة لاختيار زبون موجود
-        function selectCustomer() {
-            window.location.href = "f_categories.html";  // الانتقال إلى صفحة الفئات
+        // تحديث قائمة الزبائن
+        function updateCustomerList() {
+            const customerList = document.getElementById("customerList");
+            customerList.innerHTML = "<h3>الزبائن المسجلين</h3>"; // إزالة المحتوى السابق
+
+            customers.forEach((customer, index) => {
+                const customerItem = document.createElement("div");
+                customerItem.classList.add("customer-item");
+
+                const customerText = document.createElement("span");
+                customerText.textContent = customer;
+
+                const deleteBtn = document.createElement("button");
+                deleteBtn.textContent = "حذف";
+                deleteBtn.classList.add("delete-btn");
+                deleteBtn.onclick = () => deleteCustomer(index);
+
+                customerItem.appendChild(customerText);
+                customerItem.appendChild(deleteBtn);
+                customerList.appendChild(customerItem);
+            });
         }
 
-        // وظيفة لحذف الزبون
-        function deleteCustomer(customerId) {
-            const customerDiv = document.getElementById(customerId);
-            customerDiv.style.display = "none";  // إخفاء الزبون بعد الحذف
+        // حذف الزبون
+        function deleteCustomer(index) {
+            customers.splice(index, 1);
+            updateCustomerList();
+            document.getElementById("customerSelect").removeChild(document.getElementById("customerSelect").childNodes[index + 1]);
+        }
+
+        // الانتقال إلى صفحة الفئات
+        function goToNextPage() {
+            const selectedCustomer = document.getElementById("customerSelect").value;
+
+            if (selectedCustomer) {
+                window.location.href = "f_categories.html";
+            } else {
+                alert("من فضلك اختر زبونًا أولاً.");
+            }
         }
     </script>
 </body>
