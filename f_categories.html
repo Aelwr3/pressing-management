@@ -13,7 +13,6 @@
             margin: 0;
             padding: 0;
             text-align: center;
-            animation: fadeIn 1s ease-out;
         }
 
         header {
@@ -50,45 +49,71 @@
             color: white;
         }
 
-        .emoji {
-            font-size: 60px;
+        .selected-items {
+            background-color: rgba(255, 255, 255, 0.9);
+            color: #1e3a8a;
+            padding: 10px;
+            margin: 20px 0;
+            border-radius: 10px;
+            text-align: left;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        }
+
+        .selected-items h2 {
+            margin: 0 0 10px 0;
+            text-align: center;
+        }
+
+        .item-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 10px;
+            padding: 5px 0;
+            border-bottom: 1px solid #ddd;
+        }
+
+        .item-row input {
+            width: 50px;
+            text-align: center;
+            margin: 0 5px;
+        }
+
+        .item-row button {
+            background-color: #e11d48;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            padding: 5px 10px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        .item-row button:hover {
+            background-color: #be123c;
+        }
+
+        .total {
+            font-weight: bold;
+            font-size: 18px;
+            text-align: right;
             margin-top: 10px;
         }
 
-        .back-btn {
-            background-color: #1e3a8a;
+        .confirm-btn {
+            background-color: #10b981;
             color: white;
             border: none;
             padding: 10px 20px;
-            margin: 20px 0;
+            margin-top: 20px;
             border-radius: 5px;
             font-size: 18px;
             cursor: pointer;
             transition: background-color 0.3s ease;
         }
 
-        .back-btn:hover {
-            background-color: #2563eb;
-        }
-
-        .selected-items {
-            background-color: rgba(0, 0, 0, 0.1);
-            padding: 10px;
-            margin: 20px 0;
-            border-radius: 10px;
-        }
-
-        .selected-items h2 {
-            margin: 0 0 10px 0;
-        }
-
-        @keyframes fadeIn {
-            from {
-                opacity: 0;
-            }
-            to {
-                opacity: 1;
-            }
+        .confirm-btn:hover {
+            background-color: #059669;
         }
     </style>
 </head>
@@ -107,8 +132,9 @@
 
         <div class="selected-items" id="selectedItems" style="display: none;">
             <h2>العناصر المختارة:</h2>
-            <ul id="itemsList"></ul>
-            <button class="back-btn" onclick="confirmSelection()">التالي</button>
+            <div id="itemsList"></div>
+            <div class="total" id="totalAmount">المجموع: 0 درهم</div>
+            <button class="confirm-btn" onclick="confirmSelection()">التالي</button>
         </div>
     </div>
 
@@ -128,24 +154,42 @@
             document.getElementById("categories").style.display = "none";
 
             const itemsList = items[category]
-                .map(item => `<li onclick="toggleItem('${item}')">${item}</li>`)
+                .map(item => `<div class="item-row">
+                    <span>${item}</span>
+                    <input type="number" min="1" value="1" onchange="updateItem('${item}', this.value, 'quantity')">
+                    <input type="number" min="0" value="0" onchange="updateItem('${item}', this.value, 'price')">
+                    <button onclick="removeItem('${item}')">حذف</button>
+                </div>`)
                 .join("");
 
             document.getElementById("itemsList").innerHTML = itemsList;
             document.getElementById("selectedItems").style.display = "block";
         }
 
-        function toggleItem(item) {
-            if (selectedItems.includes(item)) {
-                selectedItems = selectedItems.filter(i => i !== item);
-            } else {
-                selectedItems.push(item);
+        function updateItem(item, value, type) {
+            let existingItem = selectedItems.find(i => i.name === item);
+            if (!existingItem) {
+                existingItem = { name: item, quantity: 1, price: 0 };
+                selectedItems.push(existingItem);
             }
+            existingItem[type] = parseInt(value);
+            calculateTotal();
+        }
+
+        function removeItem(item) {
+            selectedItems = selectedItems.filter(i => i.name !== item);
+            document.querySelector(`[onclick="removeItem('${item}')"]`).parentElement.remove();
+            calculateTotal();
+        }
+
+        function calculateTotal() {
+            const total = selectedItems.reduce((sum, item) => sum + (item.quantity * item.price), 0);
+            document.getElementById("totalAmount").textContent = `المجموع: ${total} درهم`;
         }
 
         function confirmSelection() {
-            alert("العناصر التي اخترتها: " + selectedItems.join(", "));
-            // يمكن هنا الانتقال إلى الصفحة الموالية
+            alert("العناصر التي اخترتها: " + JSON.stringify(selectedItems));
+            // هنا يتم الانتقال إلى الصفحة الموالية
         }
     </script>
 </body>
