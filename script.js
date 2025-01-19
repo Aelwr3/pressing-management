@@ -89,4 +89,12 @@ function addItem() {
 }
 
 function displayItems() {
-    const
+    const items = JSON.parse(localStorage.getItem('items')) || [];
+    const itemsList = document.getElementById('items-list');
+    itemsList.innerHTML = '';
+    items.forEach((item, index) => {
+        const itemElement = document.createElement('div');
+        itemElement.innerHTML = `القطعة ${index + 1}: ${item.itemType} - ${item.itemPrice} درهم`;
+        itemsList.appendChild(itemElement);
+    });
+}
