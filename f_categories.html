@@ -132,12 +132,17 @@
         <div class="category-section">
             <h3>الأطفال والرجال</h3>
             <div class="categories">
-                <div class="category" onclick="addItem('قميجة', 80)">👕 قميجة (80 درهم)</div>
-                <div class="category" onclick="addItem('تيشرت', 60)">👕 تيشرت (60 درهم)</div>
-                <div class="category" onclick="addItem('تريكو', 120)">🧥 تريكو (120 درهم)</div>
-                <div class="category" onclick="addItem('جابدور', 200)">👘 جابدور (200 درهم)</div>
-                <div class="category" onclick="addItem('فوقية', 100)">🩳 فوقية (100 درهم)</div>
-                <!-- أضف باقي الملابس هنا -->
+                <div class="category" onclick="addItem('قميجة', 80)">👕 قميجة</div>
+                <div class="category" onclick="addItem('تيشرت', 60)">👕 تيشرت</div>
+                <div class="category" onclick="addItem('تريكو', 120)">🧥 تريكو</div>
+                <div class="category" onclick="addItem('جابدور', 200)">👘 جابدور</div>
+                <div class="category" onclick="addItem('فوقية', 100)">🩳 فوقية</div>
+                <div class="category" onclick="addItem('دراعية', 150)">🧥 دراعية</div>
+                <div class="category" onclick="addItem('سروال', 70)">👖 سروال</div>
+                <div class="category" onclick="addItem('جاكيط', 250)">🧥 جاكيط</div>
+                <div class="category" onclick="addItem('كرافاطا', 50)">👔 كرافاطا</div>
+                <div class="category" onclick="addItem('كومبلي', 400)">👔 كومبلي</div>
+                <!-- أضف المزيد حسب الحاجة -->
             </div>
         </div>
 
@@ -145,10 +150,12 @@
         <div class="category-section">
             <h3>النساء</h3>
             <div class="categories">
-                <div class="category" onclick="addItem('قميجة نساء', 100)">👚 قميجة نساء (100 درهم)</div>
-                <div class="category" onclick="addItem('قفطان', 300)">👗 قفطان (300 درهم)</div>
-                <div class="category" onclick="addItem('تكشيطة', 500)">👗 تكشيطة (500 درهم)</div>
-                <!-- أضف باقي الملابس هنا -->
+                <div class="category" onclick="addItem('قفطان', 300)">👗 قفطان</div>
+                <div class="category" onclick="addItem('تكشيطة', 500)">👗 تكشيطة</div>
+                <div class="category" onclick="addItem('جلابية نساء', 200)">🩳 جلابية</div>
+                <div class="category" onclick="addItem('ڤيست نساء', 150)">🧥 ڤيست</div>
+                <div class="category" onclick="addItem('ملابس داخلية', 50)">🩲 ملابس داخلية</div>
+                <!-- أضف المزيد حسب الحاجة -->
             </div>
         </div>
 
@@ -156,10 +163,9 @@
         <div class="category-section">
             <h3>الأفرشة</h3>
             <div class="categories">
-                <div class="category" onclick="addItem('بطانية', 100)">🛏️ بطانية (100 درهم)</div>
-                <div class="category" onclick="addItem('مخدة', 50)">🛏️ مخدة (50 درهم)</div>
-                <div class="category" onclick="addItem('شرشف', 150)">🛏️ شرشف (150 درهم)</div>
-                <!-- أضف باقي الأفرشة هنا -->
+                <div class="category" onclick="addItem('بطانية', 100)">🛏️ بطانية</div>
+                <div class="category" onclick="addItem('مخدة', 50)">🛏️ مخدة</div>
+                <div class="category" onclick="addItem('شرشف', 150)">🛏️ شرشف</div>
             </div>
         </div>
     </div>
@@ -186,25 +192,13 @@
             updateSelectedItems();
         }
 
-        function updateQuantity(index, newQuantity) {
-            selectedItems[index].quantity = newQuantity;
-            updateSelectedItems();
-        }
-
-        function updatePrice(index, newPrice) {
-            selectedItems[index].price = newPrice;
-            updateSelectedItems();
-        }
-
         function updateSelectedItems() {
             const list = document.getElementById('selected-items-list');
             list.innerHTML = '';
             selectedItems.forEach((selectedItem, index) => {
                 const li = document.createElement('li');
                 li.innerHTML = `
-                    <span>${selectedItem.item}</span>
-                    <input type="number" value="${selectedItem.quantity}" min="1" onchange="updateQuantity(${index}, this.value)">
-                    <input type="number" value="${selectedItem.price}" min="1" onchange="updatePrice(${index}, this.value)"> درهم
+                    <span>${selectedItem.item} - ${selectedItem.price} درهم</span>
                     <button class="remove-btn" onclick="removeItem(${index})">إزالة</button>`;
                 list.appendChild(li);
             });
