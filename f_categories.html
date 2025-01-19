@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="ar">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>اختيار الفئات</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&family=Pacifico&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: #f1f1f1;
+            margin: 0;
+            padding: 0;
+            background: linear-gradient(to bottom, #1e3a8a, #3b82f6);
+            color: white;
+            text-align: center;
+            animation: fadeIn 1s ease-out;
+        }
+
+        .container {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+
+        h1 {
+            font-family: 'Pacifico', cursive;
+            font-size: 40px;
+            margin-bottom: 20px;
+            color: #ffffff;
+            text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.2);
+        }
+
+        .category-box {
+            background-color: #ffffff;
+            color: #1e3a8a;
+            padding: 20px;
+            border-radius: 10px;
+            border: 2px solid #1e3a8a;
+            width: 300px;
+            animation: slideIn 1s ease-out;
+            margin-bottom: 20px;
+        }
+
+        .category-box select, .category-box button {
+            width: 100%;
+            padding: 10px;
+            font-size: 18px;
+            border-radius: 5px;
+            margin-bottom: 10px;
+        }
+
+        .category-box button {
+            background-color: #1e3a8a;
+            color: white;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        .category-box button:hover {
+            background-color: #2563eb;
+        }
+
+        .emoji {
+            font-size: 50px;
+            margin-top: 20px;
+        }
+
+        .categories {
+            text-align: left;
+            width: 300px;
+            margin-top: 20px;
+            padding: 10px;
+            border-radius: 5px;
+            background-color: #fff;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            color: #333;
+        }
+
+        .category-item {
+            font-size: 16px;
+            margin-bottom: 10px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+            }
+            to {
+                opacity: 1;
+            }
+        }
+
+        @keyframes slideIn {
+            from {
+                transform: translateY(20px);
+                opacity: 0;
+            }
+            to {
+                transform: translateY(0);
+                opacity: 1;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>اختيار الفئات</h1>
+        <div class="emoji">👚👕👗</div>
+
+        <!-- اختيار الفئة -->
+        <div class="category-box">
+            <h2>اختر الفئة</h2>
+            <select id="categorySelect">
+                <option value="">اختر فئة</option>
+                <option value="ملابس للرجال">ملابس للرجال</option>
+                <option value="ملابس للنساء">ملابس للنساء</option>
+                <option value="ملابس للأطفال">ملابس للأطفال</option>
+            </select>
+            <button onclick="showItems()">عرض الملابس</button>
+        </div>
+
+        <!-- عرض الملابس بناءً على الفئة -->
+        <div id="itemsList" class="categories"></div>
+
+        <!-- زر العودة -->
+        <button onclick="goBack()">العودة</button>
+    </div>
+
+    <script>
+        const items = {
+            "ملابس للرجال": [
+                "قميص 👕", "بذلة رسمية 👔", "سروال جينز 👖", "دراعية 🧥", "كومبلي 👔", "ڤيست 🧥",
+                "تي شيرت 🏖️", "سروال شورت 🩳", "جاكيت 🧥", "حذاء رياضي 👟", "حزام 👖", "جاكيت جلد 🧥"
+            ],
+            "ملابس للنساء": [
+                "فستان 👗", "تنورة 👚", "بلوزة 👚", "ملحفة 🧕", "معطف 🧥", "حذاء 👠",
+                "جينز 👖", "تي شيرت 👕", "حقيبة يد 👜", "جاكيت 🧥", "شال 🧣", "بذلة سباحة 🏊"
+            ],
+            "ملابس للأطفال": [
+                "تي شيرت 👕", "بنطال 👖", "فستان للأطفال 👗", "سروال رياضي 👖", "جاكيت 🧥", "حذاء للأطفال 👟",
+                "تي شيرت رياضي 🏀", "سروال شورت 🩳", "ملابس نوم 🛏️", "جاكيت شتوي 🧥", "قبعة 🧢", "حقيبة ظهر 🎒"
+            ]
+        };
+
+        function showItems() {
+            const selectedCategory = document.getElementById("categorySelect").value;
+            const itemsList = document.getElementById("itemsList");
+            itemsList.innerHTML = ""; // مسح المحتوى السابق
+
+            if (selectedCategory) {
+                const categoryItems = items[selectedCategory];
+                categoryItems.forEach(item => {
+                    const itemDiv = document.createElement("div");
+                    itemDiv.classList.add("category-item");
+                    itemDiv.textContent = item;
+                    itemsList.appendChild(itemDiv);
+                });
+            }
+        }
+
+        function goBack() {
+            window.history.back(); // العودة إلى الصفحة السابقة
+        }
+    </script>
+</body>
+</html>
