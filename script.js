@@ -1,3 +1,11 @@
+const customItems = {
+    women: [],
+    men: [],
+    kids: [],
+    bedding: [],
+    shoes: []
+};
+
 function showItems(category) {
     const itemTypeSelect = document.getElementById('item-type');
     itemTypeSelect.innerHTML = ''; // مسح الخيارات السابقة
