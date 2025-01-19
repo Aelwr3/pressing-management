@@ -6,40 +6,44 @@
     <title>اختيار الفئات</title>
     <style>
         body {
-            font-family: Arial, sans-serif;
+            font-family: 'Arial', sans-serif;
             background-color: #f3f4f6;
             margin: 0;
             padding: 0;
             text-align: center;
+            color: #333;
         }
 
         header {
-            background-color: #1e3a8a;
+            background-color: #1d4ed8;
             color: white;
-            padding: 10px;
-            font-size: 24px;
+            padding: 15px;
+            font-size: 28px;
             font-weight: bold;
+            text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.2);
         }
 
         .categories {
             display: flex;
             justify-content: center;
-            gap: 15px;
+            gap: 10px;
             margin: 20px 0;
         }
 
         .category {
-            padding: 10px 20px;
+            padding: 10px 15px;
             background-color: #3b82f6;
             color: white;
             border: none;
-            border-radius: 5px;
+            border-radius: 8px;
+            font-size: 16px;
             cursor: pointer;
-            transition: background-color 0.3s ease;
+            transition: transform 0.3s ease, background-color 0.3s ease;
         }
 
         .category:hover {
             background-color: #2563eb;
+            transform: scale(1.05);
         }
 
         .items {
@@ -47,20 +51,27 @@
             flex-wrap: wrap;
             justify-content: center;
             gap: 15px;
+            margin: 20px 0;
+            padding: 10px;
         }
 
         .item {
-            background-color: white;
-            border: 1px solid #ccc;
-            border-radius: 5px;
+            background-color: #fff;
+            border: 1px solid #d1d5db;
+            border-radius: 8px;
             padding: 10px;
-            width: 150px;
+            width: 140px;
             text-align: center;
             box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease;
+        }
+
+        .item:hover {
+            transform: translateY(-5px);
         }
 
         .item button {
-            background-color: #1e3a8a;
+            background-color: #22c55e;
             color: white;
             border: none;
             border-radius: 5px;
@@ -71,21 +82,22 @@
         }
 
         .item button:hover {
-            background-color: #2563eb;
+            background-color: #16a34a;
         }
 
         .selected-items {
-            margin-top: 20px;
+            margin-top: 30px;
+            padding: 15px;
         }
 
         .selected-items table {
-            width: 80%;
+            width: 90%;
             margin: 0 auto;
             border-collapse: collapse;
         }
 
         .selected-items th, .selected-items td {
-            border: 1px solid #ccc;
+            border: 1px solid #d1d5db;
             padding: 10px;
             text-align: center;
         }
@@ -96,14 +108,34 @@
         }
 
         .selected-items td input {
-            width: 60px;
+            width: 50px;
             text-align: center;
         }
 
         .total {
             font-size: 18px;
             font-weight: bold;
-            margin-top: 10px;
+            margin-top: 15px;
+        }
+
+        .next-button {
+            margin-top: 20px;
+        }
+
+        .next-button button {
+            padding: 10px 20px;
+            background-color: #ef4444;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 18px;
+            cursor: pointer;
+            transition: transform 0.3s ease, background-color 0.3s ease;
+        }
+
+        .next-button button:hover {
+            background-color: #dc2626;
+            transform: scale(1.05);
         }
     </style>
 </head>
@@ -134,6 +166,10 @@
             <tbody id="selectedItems"></tbody>
         </table>
         <div class="total" id="totalPrice">المجموع: 0 درهم</div>
+    </div>
+
+    <div class="next-button">
+        <button onclick="saveAndContinue()">التالي</button>
     </div>
 
     <script>
@@ -206,6 +242,10 @@
         function removeItem(index) {
             selectedItems.splice(index, 1);
             updateSelectedItems();
+        }
+
+        function saveAndContinue() {
+            alert("تم الحفظ! الانتقال إلى الصفحة التالية.");
         }
     </script>
 </body>
