@@ -3,194 +3,149 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>إدارة الملابس</title>
+    <title>فئات الملابس - مصبنة مشاء الله</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&family=Pacifico&display=swap" rel="stylesheet">
     <style>
         body {
-            font-family: Arial, sans-serif;
+            font-family: 'Poppins', sans-serif;
             background: linear-gradient(to bottom, #1e3a8a, #3b82f6);
+            color: white;
             margin: 0;
             padding: 0;
-            color: white;
+            text-align: center;
+            animation: fadeIn 1s ease-out;
+        }
+
+        header {
+            background-color: #2563eb;
+            padding: 10px 0;
+            margin-bottom: 20px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        header h1 {
+            font-family: 'Pacifico', cursive;
+            font-size: 40px;
+            margin: 0;
         }
 
         .container {
-            width: 90%;
-            margin: 20px auto;
-            background: #ffffff;
-            border-radius: 10px;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-            color: #000;
             padding: 20px;
         }
 
-        h2 {
-            color: #333;
-        }
-
-        .clothes-list {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 10px;
-        }
-
-        .clothing-item {
-            background: #f9f9f9;
-            border: 1px solid #ddd;
-            border-radius: 8px;
+        .category {
+            background-color: white;
+            color: #1e3a8a;
             padding: 10px;
-            text-align: center;
-            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            margin: 10px 5px;
+            border-radius: 10px;
             cursor: pointer;
-            transition: 0.3s;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            transition: transform 0.3s, background-color 0.3s;
         }
 
-        .clothing-item:hover {
-            background: #e0f7fa;
+        .category:hover {
+            transform: scale(1.05);
+            background-color: #3b82f6;
+            color: white;
         }
 
-        .controls {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
+        .emoji {
+            font-size: 60px;
             margin-top: 10px;
         }
 
-        .controls input, .controls button {
-            margin: 5px 0;
-            padding: 5px;
-            border: 1px solid #ddd;
+        .back-btn {
+            background-color: #1e3a8a;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            margin: 20px 0;
             border-radius: 5px;
+            font-size: 18px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        .back-btn:hover {
+            background-color: #2563eb;
         }
 
         .selected-items {
-            margin-top: 20px;
-        }
-
-        .selected-items h3 {
-            color: #1e3a8a;
-        }
-
-        .selected-item {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 10px;
+            background-color: rgba(0, 0, 0, 0.1);
             padding: 10px;
-            background: #e3f2fd;
-            border: 1px solid #ddd;
-            border-radius: 5px;
+            margin: 20px 0;
+            border-radius: 10px;
         }
 
-        .selected-item button {
-            background: red;
-            color: white;
-            border: none;
-            padding: 5px;
-            border-radius: 5px;
-            cursor: pointer;
+        .selected-items h2 {
+            margin: 0 0 10px 0;
         }
 
-        .selected-item button:hover {
-            background: darkred;
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+            }
+            to {
+                opacity: 1;
+            }
         }
     </style>
 </head>
 <body>
+    <header>
+        <h1>فئات الملابس - مصبنة مشاء الله</h1>
+    </header>
     <div class="container">
-        <h2>إدارة الملابس</h2>
-        
+        <h2>اختر الفئة:</h2>
         <div id="categories">
-            <h3>الفئات</h3>
-            <div>
-                <button onclick="showCategory('men')">رجال</button>
-                <button onclick="showCategory('women')">نساء</button>
-                <button onclick="showCategory('kids')">أطفال</button>
-                <button onclick="showCategory('furniture')">أفرشة</button>
-                <button onclick="showCategory('shoes')">أحذية</button>
-            </div>
+            <div class="category" onclick="selectCategory('الرجال')">👔 فئة الرجال</div>
+            <div class="category" onclick="selectCategory('النساء')">👗 فئة النساء</div>
+            <div class="category" onclick="selectCategory('الأطفال')">🧸 فئة الأطفال</div>
+            <div class="category" onclick="selectCategory('الأفرشة')">🛏️ فئة الأفرشة</div>
         </div>
 
-        <div id="clothes-container">
-            <h3>الملابس</h3>
-            <div id="clothes-list" class="clothes-list"></div>
-        </div>
-
-        <div id="selected-items" class="selected-items">
-            <h3>العناصر المختارة</h3>
-            <div id="selected-list"></div>
-            <div>
-                <h4>المجموع: <span id="total">0</span> درهم</h4>
-            </div>
+        <div class="selected-items" id="selectedItems" style="display: none;">
+            <h2>العناصر المختارة:</h2>
+            <ul id="itemsList"></ul>
+            <button class="back-btn" onclick="confirmSelection()">التالي</button>
         </div>
     </div>
 
     <script>
-        const clothesData = {
-            men: [
-                "قميجة", "تيشرت", "تريكو", "جلالة", "فوقية", "دراعية", "جابدور", "سيرڤيت", 
-                "جاكيط", "كابيشون", "سلهام", "ديباردور", "شورط", "بانتاكور", "گالصون", 
-                "ڤيست", "كومبلي", "كرافاطا", "تقاشر", "سروال"
-            ],
-            women: [
-                "قميجة", "ڤيست نساء", "كومبلي نساء", "جلابية نساء", "ملحفة", "صاك", 
-                "قفطان", "تكشيطة", "تقاشر", "ملابس داخلية نسائية"
-            ],
-            kids: [
-                "قميجة", "تيشرت", "تريكو", "فوقية", "دراعية", "جابدور", "جاكيط", 
-                "كابيشون", "سلهام", "شورط", "سروال"
-            ],
-            furniture: ["بطانية", "مخدة", "شرشف"],
-            shoes: ["سبرديلة نساء", "سبرديلة رجال", "سبرديلة أطفال"]
+        const items = {
+            "الرجال": ["قميجة", "تيشرت", "تريكو", "جلالة", "فوقية", "دراعية", "جابدور", "سيرڤيت", "جاكيط", "كابيشون", "سلهام", "ديباردور", "شورط", "بانتاكور", "گالصون", "ڤيست", "كومبلي", "كرافاطا", "تقاشر", "سروال"],
+            "النساء": ["قميجة", "ڤيست نساء", "كومبلي نساء", "جلابية نساء", "ملحفة", "صاك", "قفطان", "تكشيطة", "تقاشر", "ملابس داخلية نسائية", "سبرديلة نساء"],
+            "الأطفال": ["قميجة", "تيشرت", "تريكو", "جلابية أطفال", "سبرديلة أطفال"],
+            "الأفرشة": ["غطاء سرير", "وسادة", "ستارة", "بطانية", "حصيرة"]
         };
 
-        const selectedItems = [];
-        let total = 0;
+        let selectedCategory = "";
+        let selectedItems = [];
 
-        function showCategory(category) {
-            const list = document.getElementById("clothes-list");
-            list.innerHTML = "";
-            clothesData[category].forEach(item => {
-                const div = document.createElement("div");
-                div.className = "clothing-item";
-                div.innerText = item;
-                div.onclick = () => selectItem(item);
-                list.appendChild(div);
-            });
+        function selectCategory(category) {
+            selectedCategory = category;
+            document.getElementById("categories").style.display = "none";
+
+            const itemsList = items[category]
+                .map(item => `<li onclick="toggleItem('${item}')">${item}</li>`)
+                .join("");
+
+            document.getElementById("itemsList").innerHTML = itemsList;
+            document.getElementById("selectedItems").style.display = "block";
         }
 
-        function selectItem(item) {
-            const price = prompt(`أدخل الثمن ل ${item}:`);
-            if (!price || isNaN(price)) return alert("يرجى إدخال سعر صحيح.");
-
-            const quantity = prompt(`أدخل الكمية ل ${item}:`);
-            if (!quantity || isNaN(quantity)) return alert("يرجى إدخال كمية صحيحة.");
-
-            const newItem = { name: item, price: parseFloat(price), quantity: parseInt(quantity) };
-            selectedItems.push(newItem);
-            total += newItem.price * newItem.quantity;
-
-            updateSelectedList();
+        function toggleItem(item) {
+            if (selectedItems.includes(item)) {
+                selectedItems = selectedItems.filter(i => i !== item);
+            } else {
+                selectedItems.push(item);
+            }
         }
 
-        function updateSelectedList() {
-            const list = document.getElementById("selected-list");
-            list.innerHTML = "";
-            selectedItems.forEach((item, index) => {
-                const div = document.createElement("div");
-                div.className = "selected-item";
-                div.innerHTML = `
-                    <span>${item.name} - ${item.quantity} × ${item.price} درهم</span>
-                    <button onclick="removeItem(${index})">إزالة</button>
-                `;
-                list.appendChild(div);
-            });
-            document.getElementById("total").innerText = total.toFixed(2);
-        }
-
-        function removeItem(index) {
-            total -= selectedItems[index].price * selectedItems[index].quantity;
-            selectedItems.splice(index, 1);
-            updateSelectedList();
+        function confirmSelection() {
+            alert("العناصر التي اخترتها: " + selectedItems.join(", "));
+            // يمكن هنا الانتقال إلى الصفحة الموالية
         }
     </script>
 </body>
