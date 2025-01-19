@@ -6,6 +6,7 @@
     <title>اختيار الملابس</title>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&family=Pacifico&display=swap" rel="stylesheet">
     <style>
+        /* إعدادات التصميم */
         body {
             font-family: 'Poppins', sans-serif;
             margin: 0;
@@ -23,7 +24,7 @@
         }
 
         .categories-container {
-            max-width: 800px;
+            max-width: 1000px;
             margin: 20px auto;
             background: rgba(255, 255, 255, 0.9);
             border-radius: 10px;
@@ -42,12 +43,12 @@
 
         .categories {
             display: grid;
-            grid-template-columns: repeat(2, 1fr);
+            grid-template-columns: repeat(4, 1fr);
             gap: 10px;
         }
 
         .category {
-            padding: 15px;
+            padding: 8px;
             background: white;
             color: #1e3a8a;
             border-radius: 10px;
@@ -55,6 +56,7 @@
             text-align: center;
             cursor: pointer;
             transition: transform 0.3s ease;
+            font-size: 14px;
         }
 
         .category:hover {
@@ -62,7 +64,7 @@
         }
 
         .category span {
-            font-size: 30px;
+            font-size: 24px;
             display: block;
         }
 
@@ -96,12 +98,13 @@
             padding: 5px;
         }
 
-        .selected-items ul li .price {
-            width: 80px;
-            text-align: center;
-            border: 1px solid #1e3a8a;
+        .remove-btn {
+            padding: 5px 10px;
+            background-color: red;
+            color: white;
+            border: none;
             border-radius: 5px;
-            padding: 5px;
+            cursor: pointer;
         }
 
         .next-btn {
@@ -124,126 +127,99 @@
 <body>
     <h1>اختيار الملابس</h1>
 
-    <!-- قائمة الفئات -->
     <div class="categories-container">
-        <!-- فئة الرجال -->
+        <!-- فئة الأطفال والرجال -->
         <div class="category-section">
-            <h3>رجال</h3>
+            <h3>الأطفال والرجال</h3>
             <div class="categories">
-                <div class="category" onclick="addItem('قميص رجالي', 50)">
-                    <span>👕</span>
-                    قميص رجالي (50 درهم)
-                </div>
-                <div class="category" onclick="addItem('دراعية', 120)">
-                    <span>🩲</span>
-                    دراعية (120 درهم)
-                </div>
-                <div class="category" onclick="addItem('جابادور', 150)">
-                    <span>🧥</span>
-                    جابادور (150 درهم)
-                </div>
-                <div class="category" onclick="addItem('كومبلي', 200)">
-                    <span>👔</span>
-                    كومبلي (200 درهم)
-                </div>
+                <div class="category" onclick="addItem('قميجة', 80)">👕 قميجة (80 درهم)</div>
+                <div class="category" onclick="addItem('تيشرت', 60)">👕 تيشرت (60 درهم)</div>
+                <div class="category" onclick="addItem('تريكو', 120)">🧥 تريكو (120 درهم)</div>
+                <div class="category" onclick="addItem('جلالة', 150)">🧥 جلالة (150 درهم)</div>
+                <div class="category" onclick="addItem('فوقية', 100)">🥼 فوقية (100 درهم)</div>
+                <div class="category" onclick="addItem('دراعية', 90)">🩲 دراعية (90 درهم)</div>
+                <div class="category" onclick="addItem('جابدور', 200)">🧥 جابدور (200 درهم)</div>
+                <div class="category" onclick="addItem('سيرڤيت', 70)">🧦 سيرڤيت (70 درهم)</div>
+                <div class="category" onclick="addItem('جاكيط', 180)">🧥 جاكيط (180 درهم)</div>
+                <div class="category" onclick="addItem('كابيشون', 150)">🧥 كابيشون (150 درهم)</div>
+                <div class="category" onclick="addItem('سلهام', 130)">🧥 سلهام (130 درهم)</div>
+                <div class="category" onclick="addItem('ديباردور', 160)">🧥 ديباردور (160 درهم)</div>
+                <div class="category" onclick="addItem('شورط', 50)">👖 شورط (50 درهم)</div>
+                <div class="category" onclick="addItem('بانتاكور', 100)">👖 بانتاكور (100 درهم)</div>
+                <div class="category" onclick="addItem('گالصون', 120)">🧦 گالصون (120 درهم)</div>
+                <div class="category" onclick="addItem('ڤيست', 180)">🧥 ڤيست (180 درهم)</div>
+                <div class="category" onclick="addItem('كومبلي', 250)">🧥 كومبلي (250 درهم)</div>
+                <div class="category" onclick="addItem('كرافاطا', 40)">🎩 كرافاطا (40 درهم)</div>
+                <div class="category" onclick="addItem('تقاشر', 60)">🧥 تقاشر (60 درهم)</div>
+                <div class="category" onclick="addItem('سروال', 100)">👖 سروال (100 درهم)</div>
             </div>
         </div>
 
         <!-- فئة النساء -->
         <div class="category-section">
-            <h3>نساء</h3>
+            <h3>النساء</h3>
             <div class="categories">
-                <div class="category" onclick="addItem('فستان', 100)">
-                    <span>👗</span>
-                    فستان (100 درهم)
-                </div>
-                <div class="category" onclick="addItem('ملحفة', 130)">
-                    <span>🧣</span>
-                    ملحفة (130 درهم)
-                </div>
+                <div class="category" onclick="addItem('قميجة نساء', 100)">👚 قميجة نساء (100 درهم)</div>
+                <div class="category" onclick="addItem('ڤيست نساء', 180)">🧥 ڤيست نساء (180 درهم)</div>
+                <div class="category" onclick="addItem('كومبلي نساء', 250)">🧥 كومبلي نساء (250 درهم)</div>
+                <div class="category" onclick="addItem('جلابية نساء', 200)">🧥 جلابية نساء (200 درهم)</div>
+                <div class="category" onclick="addItem('ملحفة', 150)">🧥 ملحفة (150 درهم)</div>
+                <div class="category" onclick="addItem('صاك', 50)">🎒 صاك (50 درهم)</div>
+                <div class="category" onclick="addItem('قفطان', 250)">🧥 قفطان (250 درهم)</div>
+                <div class="category" onclick="addItem('تكشيطة', 300)">🧥 تكشيطة (300 درهم)</div>
+                <div class="category" onclick="addItem('تقاشر نساء', 70)">🧥 تقاشر نساء (70 درهم)</div>
+                <div class="category" onclick="addItem('ملابس داخلية نسائية', 40)">👙 ملابس داخلية نسائية (40 درهم)</div>
             </div>
         </div>
 
-        <!-- فئة الأطفال -->
+        <!-- فئة الأفرشة -->
         <div class="category-section">
-            <h3>أطفال</h3>
+            <h3>الأفرشة</h3>
             <div class="categories">
-                <div class="category" onclick="addItem('فستان أطفال', 60)">
-                    <span>👗</span>
-                    فستان أطفال (60 درهم)
-                </div>
-                <div class="category" onclick="addItem('بدلة أطفال', 70)">
-                    <span>🩳</span>
-                    بدلة أطفال (70 درهم)
-                </div>
+                <div class="category" onclick="addItem('بطانية', 100)">🛏️ بطانية (100 درهم)</div>
+                <div class="category" onclick="addItem('وسادة', 50)">🛏️ وسادة (50 درهم)</div>
+                <div class="category" onclick="addItem('ستارة', 80)">🛏️ ستارة (80 درهم)</div>
+                <div class="category" onclick="addItem('مفرش', 150)">🛏️ مفرش (150 درهم)</div>
             </div>
         </div>
+
     </div>
 
-    <!-- قائمة الملابس المختارة -->
+    <!-- العناصر المحددة -->
     <div class="selected-items">
-        <h3>الملابس المختارة:</h3>
-        <ul id="selected-list"></ul>
-        <p id="total-price">المجموع: 0 درهم</p>
+        <h3>العناصر المحددة</h3>
+        <ul id="selected-items-list">
+            <!-- سيتم إضافة العناصر هنا -->
+        </ul>
+        <button class="next-btn" onclick="goNext()">الخطوة التالية</button>
     </div>
-
-    <button class="next-btn" onclick="goToNextPage()">التالي</button>
 
     <script>
-        let items = [];
-        let totalPrice = 0;
+        let selectedItems = [];
 
-        function addItem(name, price) {
-            const existingItem = items.find(item => item.name === name);
-            if (existingItem) {
-                existingItem.quantity += 1;
-            } else {
-                items.push({ name, price, quantity: 1 });
-            }
+        function addItem(item, price) {
+            selectedItems.push({ item, price });
+            updateSelectedItems();
+        }
+
+        function removeItem(index) {
+            selectedItems.splice(index, 1);
             updateSelectedItems();
         }
 
         function updateSelectedItems() {
-            const list = document.getElementById("selected-list");
-            const totalPriceElement = document.getElementById("total-price");
-            list.innerHTML = "";
-
-            totalPrice = 0;
-
-            items.forEach(item => {
-                totalPrice += item.price * item.quantity;
-                const listItem = document.createElement("li");
-
-                listItem.innerHTML = `
-                    ${item.name} - 
-                    <input type="number" value="${item.quantity}" min="1" onchange="updateQuantity('${item.name}', this.value)">
-                    x 
-                    <input class="price" type="number" value="${item.price}" min="1" onchange="updatePrice('${item.name}', this.value)"> درهم
-                `;
-                list.appendChild(listItem);
+            const list = document.getElementById('selected-items-list');
+            list.innerHTML = '';
+            selectedItems.forEach((selectedItem, index) => {
+                const li = document.createElement('li');
+                li.innerHTML = `${selectedItem.item} - ${selectedItem.price} درهم 
+                <button class="remove-btn" onclick="removeItem(${index})">إزالة</button>`;
+                list.appendChild(li);
             });
-
-            totalPriceElement.textContent = `المجموع: ${totalPrice} درهم`;
         }
 
-        function updateQuantity(name, quantity) {
-            const item = items.find(item => item.name === name);
-            if (item) {
-                item.quantity = parseInt(quantity);
-                updateSelectedItems();
-            }
-        }
-
-        function updatePrice(name, price) {
-            const item = items.find(item => item.name === name);
-            if (item) {
-                item.price = parseInt(price);
-                updateSelectedItems();
-            }
-        }
-
-        function goToNextPage() {
-            window.location.href = "summary.html";
+        function goNext() {
+            alert('الخطوة التالية');
         }
     </script>
 </body>
