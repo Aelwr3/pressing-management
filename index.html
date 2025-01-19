@@ -25,7 +25,11 @@
             </section>
             <section id="new-customer" style="display: none;">
                 <h2>إدخال زبون جديد</h2>
-                <button onclick="showCategories()">متابعة</button>
+                <label for="customer-name">اسم الزبون:</label>
+                <input type="text" id="customer-name" placeholder="أدخل اسم الزبون" required>
+                <label for="customer-phone">رقم الهاتف:</label>
+                <input type="text" id="customer-phone" placeholder="أدخل رقم الهاتف" required>
+                <button onclick="showCategories()">التالي</button>
             </section>
             <section id="existing-customer" style="display: none;">
                 <h2>اختيار الزبون</h2>
