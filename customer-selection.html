@@ -23,12 +23,13 @@
             justify-content: center;
             align-items: center;
             height: 100vh;
+            padding: 20px;
         }
 
         h1 {
             font-family: 'Pacifico', cursive;
-            font-size: 50px;
-            margin-bottom: 20px;
+            font-size: 48px;
+            margin-bottom: 30px;
             color: #ffffff;
             text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.2);
         }
@@ -36,24 +37,28 @@
         .options-box {
             background-color: #ffffff;
             color: #1e3a8a;
-            padding: 20px;
-            border-radius: 10px;
+            padding: 25px;
+            border-radius: 15px;
             border: 2px solid #1e3a8a;
-            width: 300px;
+            width: 100%;
+            max-width: 400px;
+            margin-bottom: 20px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
             animation: slideIn 1s ease-out;
         }
 
         .options-box button {
-            padding: 10px 20px;
+            padding: 12px 25px;
             background-color: #1e3a8a;
             color: white;
             border: none;
-            border-radius: 5px;
-            font-size: 18px;
+            border-radius: 10px;
+            font-size: 20px;
             cursor: pointer;
             width: 100%;
             transition: background-color 0.3s ease;
-            margin-bottom: 10px;
+            margin-bottom: 15px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
         }
 
         .options-box button:hover {
@@ -61,16 +66,25 @@
         }
 
         .customer-list {
-            margin-top: 20px;
+            margin-top: 30px;
             background-color: #ffffff;
-            padding: 10px;
-            border-radius: 10px;
-            width: 300px;
+            padding: 20px;
+            border-radius: 15px;
+            width: 100%;
+            max-width: 400px;
             border: 2px solid #1e3a8a;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            animation: slideIn 1s ease-out;
         }
 
         .customer-list div {
-            margin: 5px 0;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin: 10px 0;
+            padding: 10px;
+            background-color: #f1f1f1;
+            border-radius: 10px;
         }
 
         .delete-btn {
@@ -80,6 +94,8 @@
             border-radius: 5px;
             padding: 5px 10px;
             cursor: pointer;
+            font-size: 16px;
+            transition: background-color 0.3s ease;
         }
 
         .delete-btn:hover {
@@ -117,11 +133,14 @@
     <div class="container">
         <h1>مصبنة مشاء الله</h1>
         <div class="emoji">🧺✨</div> <!-- إيموجي للشعار أو الزخرفة -->
+        
+        <!-- خيارات إضافة الزبون أو اختياره -->
         <div class="options-box">
             <button onclick="addCustomer()">إضافة زبون جديد</button>
             <button onclick="selectCustomer()">اختيار زبون موجود</button>
         </div>
         
+        <!-- عرض الزبائن المحفوظين -->
         <div class="customer-list">
             <h3>الزبائن المحفوظين:</h3>
             <div id="customer-1">
