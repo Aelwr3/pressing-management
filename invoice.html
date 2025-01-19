@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>الفاتورة</title>
     <style>
+        /* نفس تنسيق الصفحة التي تم تعديله سابقًا */
         body {
             font-family: 'Arial', sans-serif;
             background-color: #f3f4f6;
@@ -23,41 +24,69 @@
             text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.2);
         }
 
-        .invoice {
-            margin-top: 30px;
-            padding: 15px;
+        .invoice-container {
+            background-color: #fff;
+            border-radius: 10px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+            padding: 20px;
+            margin: 20px;
         }
 
-        .invoice table {
-            width: 80%;
-            margin: 0 auto;
-            border-collapse: collapse;
+        .invoice-header {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 20px;
         }
 
-        .invoice th, .invoice td {
-            border: 1px solid #d1d5db;
-            padding: 10px;
-            text-align: center;
+        .invoice-header .invoice-title {
+            font-size: 24px;
+            font-weight: bold;
         }
 
-        .invoice th {
-            background-color: #3b82f6;
-            color: white;
+        .invoice-header .invoice-date {
+            font-size: 18px;
         }
 
-        .total {
+        .invoice-details {
+            margin-bottom: 20px;
+        }
+
+        .payment-status {
+            margin-top: 20px;
             font-size: 18px;
             font-weight: bold;
-            margin-top: 15px;
         }
 
-        .back-button {
+        .paid {
+            color: #22c55e;
+        }
+
+        .unpaid {
+            color: #ef4444;
+        }
+
+        .paid .status-text {
+            font-size: 20px;
+            color: green;
+        }
+
+        .unpaid .status-text {
+            font-size: 20px;
+            color: red;
+        }
+
+        .total-amount {
+            font-size: 20px;
+            margin-top: 10px;
+        }
+
+        .next-button {
             margin-top: 20px;
         }
 
-        .back-button button {
+        .next-button button {
             padding: 10px 20px;
-            background-color: #3b82f6;
+            background-color: #ef4444;
             color: white;
             border: none;
             border-radius: 8px;
@@ -66,98 +95,61 @@
             transition: transform 0.3s ease, background-color 0.3s ease;
         }
 
-        .back-button button:hover {
-            background-color: #2563eb;
+        .next-button button:hover {
+            background-color: #dc2626;
             transform: scale(1.05);
-        }
-
-        .invoice-header {
-            margin-bottom: 20px;
-            text-align: center;
         }
     </style>
 </head>
 <body>
     <header>الفاتورة</header>
 
-    <div class="invoice">
+    <div class="invoice-container">
         <div class="invoice-header">
-            <p id="invoiceDate"></p>
-            <p id="invoiceNumber"></p>
+            <div class="invoice-title">فاتورة #12345</div>
+            <div class="invoice-date">التاريخ: 2025-01-19</div>
         </div>
 
-        <h3>تفاصيل الفاتورة</h3>
-        <table>
-            <thead>
-                <tr>
-                    <th>العنصر</th>
-                    <th>الكمية</th>
-                    <th>السعر</th>
-                    <th>إجمالي</th>
-                </tr>
-            </thead>
-            <tbody id="invoiceItems"></tbody>
-        </table>
-        <div class="total" id="invoiceTotal">المجموع: 0 درهم</div>
-    </div>
+        <div class="invoice-details">
+            <p>المنتج: قميجة</p>
+            <p>الكمية: 2</p>
+            <p>السعر: 150 درهم</p>
+            <p>المجموع: 300 درهم</p>
+        </div>
 
-    <div class="back-button">
-        <button onclick="window.location.href = 'index.html';">الرجوع إلى الفئات</button>
+        <div class="payment-status">
+            <div class="unpaid status-text">لم يتم الدفع بعد</div>
+        </div>
+
+        <div class="total-amount">
+            <p>المجموع: 300 درهم</p>
+        </div>
+
+        <div class="next-button">
+            <button onclick="saveInvoiceAndRedirect()">التالي</button>
+        </div>
     </div>
 
     <script>
-        // استرجاع البيانات المخزنة من localStorage
-        let selectedItems = JSON.parse(localStorage.getItem('selectedItems')) || [];
+        // دالة لحفظ الفاتورة في localStorage والانتقال إلى صفحة الدفع
+        function saveInvoiceAndRedirect() {
+            // بيانات الفاتورة
+            const invoiceData = {
+                invoiceNumber: '12345',
+                date: '2025-01-19',
+                product: 'قميجة',
+                quantity: 2,
+                price: 150,
+                total: 300,
+                status: 'unpaid'
+            };
 
-        // جلب التاريخ الحالي
-        function getCurrentDate() {
-            const date = new Date();
-            const day = String(date.getDate()).padStart(2, '0');
-            const month = String(date.getMonth() + 1).padStart(2, '0');
-            const year = date.getFullYear();
-            return `${day}/${month}/${year}`;
+            // تخزين بيانات الفاتورة في localStorage
+            localStorage.setItem('invoice', JSON.stringify(invoiceData));
+
+            // الانتقال إلى صفحة الدفع
+            window.location.href = 'payment-status.html';
         }
-
-        // توليد الرقم التسلسلي
-        function generateInvoiceNumber() {
-            let invoiceNumber = localStorage.getItem('invoiceNumber');
-            if (!invoiceNumber) {
-                invoiceNumber = 1; // إذا لم يكن هناك رقم تسلسلي في الذاكرة، نبدأ من 1
-            } else {
-                invoiceNumber = parseInt(invoiceNumber) + 1; // زيادة الرقم التسلسلي
-            }
-            localStorage.setItem('invoiceNumber', invoiceNumber); // حفظ الرقم التسلسلي الجديد
-            return invoiceNumber;
-        }
-
-        function generateInvoice() {
-            // عرض التاريخ والرقم التسلسلي
-            document.getElementById('invoiceDate').innerText = `التاريخ: ${getCurrentDate()}`;
-            document.getElementById('invoiceNumber').innerText = `رقم الفاتورة: ${generateInvoiceNumber()}`;
-
-            // عرض العناصر المختارة
-            const invoiceItemsTable = document.getElementById("invoiceItems");
-            let totalPrice = 0;
-
-            selectedItems.forEach(item => {
-                const itemTotal = item.quantity * item.price;
-                totalPrice += itemTotal;
-
-                const row = document.createElement("tr");
-                row.innerHTML = `
-                    <td>${item.name}</td>
-                    <td>${item.quantity}</td>
-                    <td>${item.price} درهم</td>
-                    <td>${itemTotal} درهم</td>
-                `;
-                invoiceItemsTable.appendChild(row);
-            });
-
-            document.getElementById("invoiceTotal").innerText = `المجموع: ${totalPrice} درهم`;
-        }
-
-        // تحميل الفاتورة عند تحميل الصفحة
-        generateInvoice();
     </script>
 </body>
 </html>
