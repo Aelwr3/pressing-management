@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>اختيار الفئات</title>
+    <title>اختيار الملابس</title>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&family=Pacifico&display=swap" rel="stylesheet">
     <style>
         body {
@@ -17,74 +17,96 @@
             animation: fadeIn 1s ease-out;
         }
 
-        .container {
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            padding: 20px;
-        }
-
         h1 {
             font-family: 'Pacifico', cursive;
             font-size: 40px;
-            margin-bottom: 20px;
-            color: #ffffff;
+            margin-top: 20px;
             text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.2);
         }
 
-        .category-box {
-            background-color: #ffffff;
-            color: #1e3a8a;
+        .categories {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 15px;
             padding: 20px;
-            border-radius: 10px;
-            border: 2px solid #1e3a8a;
-            width: 300px;
-            animation: slideIn 1s ease-out;
-            margin-bottom: 20px;
+            margin: 0 auto;
+            max-width: 600px;
         }
 
-        .category-box select, .category-box button {
-            width: 100%;
-            padding: 10px;
+        .category {
+            background-color: white;
+            color: #1e3a8a;
+            border-radius: 10px;
+            padding: 15px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            text-align: center;
+            cursor: pointer;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .category:hover {
+            transform: scale(1.05);
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3);
+        }
+
+        .category span {
+            font-size: 30px;
+        }
+
+        .category h2 {
+            margin: 10px 0;
             font-size: 18px;
-            border-radius: 5px;
+        }
+
+        .category p {
+            margin: 0;
+            font-size: 16px;
+        }
+
+        .selected-items {
+            background-color: rgba(0, 0, 0, 0.6);
+            padding: 15px;
+            border-radius: 10px;
+            margin: 20px;
+            max-width: 600px;
+            margin: 20px auto;
+            color: white;
+            text-align: left;
+        }
+
+        .selected-items h3 {
             margin-bottom: 10px;
         }
 
-        .category-box button {
+        .selected-items ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        .selected-items ul li {
+            margin-bottom: 10px;
+        }
+
+        .total {
+            margin-top: 10px;
+            font-size: 20px;
+            font-weight: bold;
+        }
+
+        .next-btn {
+            padding: 10px 20px;
             background-color: #1e3a8a;
             color: white;
+            border: none;
+            border-radius: 5px;
+            font-size: 18px;
             cursor: pointer;
+            margin-top: 20px;
             transition: background-color 0.3s ease;
         }
 
-        .category-box button:hover {
+        .next-btn:hover {
             background-color: #2563eb;
-        }
-
-        .emoji {
-            font-size: 50px;
-            margin-top: 20px;
-        }
-
-        .categories {
-            text-align: left;
-            width: 300px;
-            margin-top: 20px;
-            padding: 10px;
-            border-radius: 5px;
-            background-color: #fff;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-            color: #333;
-        }
-
-        .category-item {
-            font-size: 16px;
-            margin-bottom: 10px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
         }
 
         @keyframes fadeIn {
@@ -95,77 +117,117 @@
                 opacity: 1;
             }
         }
-
-        @keyframes slideIn {
-            from {
-                transform: translateY(20px);
-                opacity: 0;
-            }
-            to {
-                transform: translateY(0);
-                opacity: 1;
-            }
-        }
     </style>
 </head>
 <body>
-    <div class="container">
-        <h1>اختيار الفئات</h1>
-        <div class="emoji">👚👕👗</div>
-
-        <!-- اختيار الفئة -->
-        <div class="category-box">
-            <h2>اختر الفئة</h2>
-            <select id="categorySelect">
-                <option value="">اختر فئة</option>
-                <option value="ملابس للرجال">ملابس للرجال</option>
-                <option value="ملابس للنساء">ملابس للنساء</option>
-                <option value="ملابس للأطفال">ملابس للأطفال</option>
-            </select>
-            <button onclick="showItems()">عرض الملابس</button>
+    <h1>اختيار الملابس</h1>
+    <div class="selected-items">
+        <h3>الملابس المختارة:</h3>
+        <ul id="item-list"></ul>
+        <p class="total" id="total-price">المجموع: 0 درهم</p>
+    </div>
+    <div class="categories">
+        <!-- فئة الرجال -->
+        <div class="category" onclick="addItem('قميص رجالي', 50)">
+            <span>👕</span>
+            <h2>قميص رجالي</h2>
+            <p>50 درهم</p>
+        </div>
+        <div class="category" onclick="addItem('دراعية', 120)">
+            <span>🩲</span>
+            <h2>دراعية</h2>
+            <p>120 درهم</p>
+        </div>
+        <div class="category" onclick="addItem('جابادور', 150)">
+            <span>🧥</span>
+            <h2>جابادور</h2>
+            <p>150 درهم</p>
+        </div>
+        <div class="category" onclick="addItem('كومبلي', 200)">
+            <span>👔</span>
+            <h2>كومبلي</h2>
+            <p>200 درهم</p>
+        </div>
+        <div class="category" onclick="addItem('فيست', 80)">
+            <span>🦺</span>
+            <h2>فيست</h2>
+            <p>80 درهم</p>
         </div>
 
-        <!-- عرض الملابس بناءً على الفئة -->
-        <div id="itemsList" class="categories"></div>
+        <!-- فئة النساء -->
+        <div class="category" onclick="addItem('فستان', 100)">
+            <span>👗</span>
+            <h2>فستان</h2>
+            <p>100 درهم</p>
+        </div>
+        <div class="category" onclick="addItem('ملحفة', 130)">
+            <span>🧣</span>
+            <h2>ملحفة</h2>
+            <p>130 درهم</p>
+        </div>
+        <div class="category" onclick="addItem('جاكيت نسائي', 90)">
+            <span>🧥</span>
+            <h2>جاكيت نسائي</h2>
+            <p>90 درهم</p>
+        </div>
+        <div class="category" onclick="addItem('عباية', 150)">
+            <span>🩱</span>
+            <h2>عباية</h2>
+            <p>150 درهم</p>
+        </div>
+        <div class="category" onclick="addItem('تنورة', 70)">
+            <span>👚</span>
+            <h2>تنورة</h2>
+            <p>70 درهم</p>
+        </div>
 
-        <!-- زر العودة -->
-        <button onclick="goBack()">العودة</button>
+        <!-- فئة الأطفال -->
+        <div class="category" onclick="addItem('بدلة أطفال', 70)">
+            <span>🩳</span>
+            <h2>بدلة أطفال</h2>
+            <p>70 درهم</p>
+        </div>
+        <div class="category" onclick="addItem('فستان أطفال', 60)">
+            <span>👗</span>
+            <h2>فستان أطفال</h2>
+            <p>60 درهم</p>
+        </div>
+        <div class="category" onclick="addItem('بيجامة أطفال', 50)">
+            <span>👕</span>
+            <h2>بيجامة أطفال</h2>
+            <p>50 درهم</p>
+        </div>
+        <div class="category" onclick="addItem('ملحفة أطفال', 40)">
+            <span>🧣</span>
+            <h2>ملحفة أطفال</h2>
+            <p>40 درهم</p>
+        </div>
+        <div class="category" onclick="addItem('فيست أطفال', 30)">
+            <span>🦺</span>
+            <h2>فيست أطفال</h2>
+            <p>30 درهم</p>
+        </div>
     </div>
+    <button class="next-btn" onclick="goToNextPage()">التالي</button>
 
     <script>
-        const items = {
-            "ملابس للرجال": [
-                "قميص 👕", "بذلة رسمية 👔", "سروال جينز 👖", "دراعية 🧥", "كومبلي 👔", "ڤيست 🧥",
-                "تي شيرت 🏖️", "سروال شورت 🩳", "جاكيت 🧥", "حذاء رياضي 👟", "حزام 👖", "جاكيت جلد 🧥"
-            ],
-            "ملابس للنساء": [
-                "فستان 👗", "تنورة 👚", "بلوزة 👚", "ملحفة 🧕", "معطف 🧥", "حذاء 👠",
-                "جينز 👖", "تي شيرت 👕", "حقيبة يد 👜", "جاكيت 🧥", "شال 🧣", "بذلة سباحة 🏊"
-            ],
-            "ملابس للأطفال": [
-                "تي شيرت 👕", "بنطال 👖", "فستان للأطفال 👗", "سروال رياضي 👖", "جاكيت 🧥", "حذاء للأطفال 👟",
-                "تي شيرت رياضي 🏀", "سروال شورت 🩳", "ملابس نوم 🛏️", "جاكيت شتوي 🧥", "قبعة 🧢", "حقيبة ظهر 🎒"
-            ]
-        };
+        let items = [];
+        let totalPrice = 0;
 
-        function showItems() {
-            const selectedCategory = document.getElementById("categorySelect").value;
-            const itemsList = document.getElementById("itemsList");
-            itemsList.innerHTML = ""; // مسح المحتوى السابق
+        function addItem(name, price) {
+            items.push({ name, price });
+            totalPrice += price;
 
-            if (selectedCategory) {
-                const categoryItems = items[selectedCategory];
-                categoryItems.forEach(item => {
-                    const itemDiv = document.createElement("div");
-                    itemDiv.classList.add("category-item");
-                    itemDiv.textContent = item;
-                    itemsList.appendChild(itemDiv);
-                });
-            }
+            const itemList = document.getElementById("item-list");
+            const totalPriceElement = document.getElementById("total-price");
+
+            itemList.innerHTML = items.map(item => `<li>${item.name} - ${item.price} درهم</li>`).join("");
+            totalPriceElement.textContent = `المجموع: ${totalPrice} درهم`;
         }
 
-        function goBack() {
-            window.history.back(); // العودة إلى الصفحة السابقة
+        function goToNextPage() {
+            // الانتقال إلى الصفحة التالية
+            window.location.href = "summary.html";
         }
     </script>
 </body>
