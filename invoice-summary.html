@@ -104,13 +104,18 @@
     </div>
 
     <script>
-        // بيانات الفواتير المخزنة في localStorage
+        // الحصول على الفواتير المخزنة في localStorage
         const invoices = JSON.parse(localStorage.getItem("invoices")) || [];
 
         // دالة لعرض جميع الفواتير
         function displayInvoices(invoicesToDisplay) {
             const invoiceListContainer = document.getElementById("invoiceList");
             invoiceListContainer.innerHTML = ""; // مسح المحتوى الحالي
+
+            if (invoicesToDisplay.length === 0) {
+                invoiceListContainer.innerHTML = "<p>لا توجد فواتير للعرض.</p>";
+                return;
+            }
 
             invoicesToDisplay.forEach(invoice => {
                 const invoiceRow = document.createElement("div");
@@ -143,4 +148,4 @@
         };
     </script>
 </body>
-</html> 
+</html>
