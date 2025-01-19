@@ -169,7 +169,7 @@
     </div>
 
     <div class="next-button">
-        <button onclick="saveAndContinue()">التالي</button>
+        <button onclick="window.location.href = 'invoice.html';">التالي</button>
     </div>
 
     <script>
@@ -242,10 +242,6 @@
         function removeItem(index) {
             selectedItems.splice(index, 1);
             updateSelectedItems();
-        }
-
-        function saveAndContinue() {
-            alert("تم الحفظ! الانتقال إلى الصفحة التالية.");
         }
     </script>
 </body>
