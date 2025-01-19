@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="ar">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>البحث عن الفاتورة</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #f3f4f6;
+            color: #333;
+            text-align: center;
+            margin: 0;
+            padding: 0;
+        }
+
+        header {
+            background-color: #1d4ed8;
+            color: white;
+            padding: 15px;
+            font-size: 28px;
+            font-weight: bold;
+        }
+
+        .search-container {
+            margin: 20px;
+            padding: 20px;
+            background-color: #fff;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .search-container input {
+            padding: 10px;
+            font-size: 18px;
+            width: 80%;
+            border-radius: 8px;
+            border: 1px solid #d1d5db;
+        }
+
+        .search-container button {
+            padding: 10px 20px;
+            background-color: #3b82f6;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 18px;
+            cursor: pointer;
+            transition: transform 0.3s ease, background-color 0.3s ease;
+        }
+
+        .search-container button:hover {
+            background-color: #2563eb;
+            transform: scale(1.05);
+        }
+
+        .results {
+            margin-top: 20px;
+        }
+
+        .back-button {
+            margin-top: 30px;
+        }
+
+        .back-button button {
+            padding: 10px 20px;
+            background-color: #f59e0b;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 18px;
+            cursor: pointer;
+            transition: transform 0.3s ease, background-color 0.3s ease;
+        }
+
+        .back-button button:hover {
+            background-color: #d97706;
+            transform: scale(1.05);
+        }
+    </style>
+</head>
+<body>
+    <header>البحث عن الفاتورة</header>
+
+    <div class="search-container">
+        <input type="text" id="searchInput" placeholder="أدخل الرقم التسلسلي للفاتورة" />
+        <button onclick="searchInvoice()">بحث</button>
+    </div>
+
+    <div class="results" id="invoiceResults"></div>
+
+    <div class="back-button">
+        <button onclick="goToCustomerSelection()">الرجوع إلى إضافة زبون</button>
+    </div>
+
+    <script>
+        function searchInvoice() {
+            const serialNumber = document.getElementById("searchInput").value;
+            const invoices = JSON.parse(localStorage.getItem("invoices") || "[]");
+
+            const result = invoices.find(invoice => invoice.serialNumber === serialNumber);
+            const resultContainer = document.getElementById("invoiceResults");
+
+            if (result) {
+                resultContainer.innerHTML = `
+                    <p>الرقم التسلسلي: ${result.serialNumber}</p>
+                    <p>الزبون: ${result.customerName}</p>
+                    <p>الملابس: ${result.clothes}</p>
+                    <p>الثمن الإجمالي: ${result.totalPrice} درهم</p>
+                    <p>تاريخ الفاتورة: ${result.date}</p>
+                    <p>حالة الدفع: ${result.paidStatus}</p>
+                `;
+            } else {
+                resultContainer.innerHTML = "<p>لم يتم العثور على الفاتورة.</p>";
+            }
+        }
+
+        function goToCustomerSelection() {
+            window.location.href = "customer-selection.html";
+        }
+    </script>
+</body>
+</html>
