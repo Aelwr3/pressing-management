@@ -8,75 +8,47 @@
         body {
             font-family: 'Arial', sans-serif;
             background-color: #f3f4f6;
-            text-align: center;
-            padding: 20px;
             color: #333;
+            text-align: center;
         }
-
         header {
             background-color: #1d4ed8;
             color: white;
             padding: 15px;
             font-size: 24px;
             font-weight: bold;
+            text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.2);
         }
-
-        .invoice-container {
-            background-color: white;
-            padding: 20px;
+        .payment-form {
+            margin: 20px;
+            background-color: #fff;
             border-radius: 8px;
-            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-            max-width: 600px;
-            margin: 20px auto;
+            padding: 20px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
         }
-
-        .invoice-header {
-            font-size: 20px;
-            font-weight: bold;
-            color: #1d4ed8;
-        }
-
-        .invoice-item {
+        .payment-form p {
             font-size: 18px;
-            margin: 10px 0;
+            margin: 5px 0;
         }
-
-        .payment-options {
+        .payment-form .status {
+            font-size: 22px;
+            font-weight: bold;
+            color: #22c55e;
+        }
+        .buttons {
             margin-top: 20px;
         }
-
-        .payment-button {
+        .buttons button {
             padding: 10px 20px;
-            font-size: 16px;
-            margin: 10px;
-            border-radius: 8px;
-            cursor: pointer;
-            transition: background-color 0.3s ease;
-        }
-
-        .full {
-            background-color: #22c55e;
-            color: white;
-        }
-
-        .partial {
-            background-color: #ef4444;
-            color: white;
-        }
-
-        .nav-button {
             background-color: #3b82f6;
             color: white;
-            padding: 10px 20px;
             border: none;
             border-radius: 8px;
-            cursor: pointer;
             font-size: 16px;
-            margin-top: 20px;
+            cursor: pointer;
             transition: background-color 0.3s ease;
         }
-
-        .nav-button:hover {
+        .buttons button:hover {
             background-color: #2563eb;
         }
     </style>
@@ -84,70 +56,63 @@
 <body>
     <header>حالة الدفع</header>
 
-    <div class="invoice-container">
-        <div class="invoice-header">الفاتورة رقم <span id="invoiceNumber">12345</span></div>
+    <div class="payment-form">
+        <p><strong>اسم الزبون:</strong> <span id="customerName"></span></p>
+        <p><strong>المجموع الكلي:</strong> <span id="totalPrice"></span></p>
 
-        <div class="invoice-content">
-            <div class="invoice-item"><strong>اسم الزبون:</strong> <span id="customerName">أحمد بن عبد الله</span></div>
-            <div class="invoice-item"><strong>الملابس:</strong> <span id="items">قميص، بنطال، حذاء</span></div>
-            <div class="invoice-item"><strong>الثمن الإجمالي:</strong> <span id="totalPrice">1000 درهم</span></div>
+        <div>
+            <button onclick="markAsPaid()">دفع كلي</button>
+            <button onclick="markAsPartial()">دفع جزئي</button>
         </div>
 
-        <div class="payment-options">
-            <button class="payment-button full" onclick="markAsPaid()">الدفع بالكامل ✅</button>
-            <button class="payment-button partial" onclick="markAsPartial()">الدفع الجزئي 💰</button>
+        <div id="partialPayment" style="display: none;">
+            <input type="number" id="partialAmount" placeholder="أدخل المبلغ المدفوع" />
+            <button onclick="submitPartialPayment()">أرسل</button>
         </div>
 
-        <div class="navigation-buttons">
-            <button class="nav-button" onclick="goBack()">العودة</button>
-            <button class="nav-button" onclick="finalizePayment()">إتمام الدفع</button>
-        </div>
+        <p class="status" id="paymentStatus"></p>
+    </div>
+
+    <div class="buttons">
+        <button onclick="goToCustomerSelection()">الرجوع إلى إضافة زبون</button>
     </div>
 
     <script>
-        // تحميل بيانات الفاتورة من localStorage
-        const storedInvoice = JSON.parse(localStorage.getItem("invoiceData"));
-        if (storedInvoice) {
-            document.getElementById("invoiceNumber").innerText = storedInvoice.invoiceNumber;
-            document.getElementById("customerName").innerText = storedInvoice.customerName;
-            document.getElementById("items").innerText = storedInvoice.items;
-            document.getElementById("totalPrice").innerText = `${storedInvoice.totalPrice} درهم`;
+        // استرجاع البيانات من LocalStorage
+        const invoice = JSON.parse(localStorage.getItem("invoice"));
+        if (invoice) {
+            document.getElementById("customerName").textContent = invoice.customerName;
+            document.getElementById("totalPrice").textContent = `${invoice.total} درهم`;
         }
 
-        let invoiceData = { ...storedInvoice, status: "unpaid" };
-
-        // دالة لتغيير حالة الدفع إلى "تم الدفع بالكامل"
         function markAsPaid() {
-            invoiceData.status = "paid";
-            document.getElementById("totalPrice").innerText = "تم الدفع بالكامل ✅";
-            document.querySelector(".payment-options").style.display = "none";
+            const invoice = JSON.parse(localStorage.getItem("invoice"));
+            invoice.status = "مدفوعة";
+            localStorage.setItem("invoice", JSON.stringify(invoice));
+            document.getElementById("paymentStatus").textContent = "تم الدفع بالكامل!";
+            document.getElementById("paymentStatus").style.color = "#22c55e";
         }
 
-        // دالة لتغيير حالة الدفع إلى "الدفع الجزئي"
         function markAsPartial() {
-            const partialAmount = prompt("أدخل المبلغ المدفوع:");
-            if (partialAmount && !isNaN(partialAmount)) {
-                const remainingAmount = invoiceData.totalPrice - partialAmount;
-                invoiceData.status = "partial";
-                document.getElementById("totalPrice").innerText = `المبلغ المتبقي: ${remainingAmount} درهم`;
+            document.getElementById("partialPayment").style.display = "block";
+        }
+
+        function submitPartialPayment() {
+            const partialAmount = document.getElementById("partialAmount").value;
+            if (partialAmount && partialAmount > 0) {
+                const invoice = JSON.parse(localStorage.getItem("invoice"));
+                invoice.partialPaid = partialAmount;
+                invoice.status = "مدفوع جزئياً";
+                localStorage.setItem("invoice", JSON.stringify(invoice));
+                document.getElementById("paymentStatus").textContent = `تم دفع ${partialAmount} درهم جزئياً.`;
+                document.getElementById("paymentStatus").style.color = "#f59e0b";
             } else {
-                alert("الرجاء إدخال قيمة صحيحة.");
+                alert("من فضلك أدخل مبلغاً صالحاً.");
             }
         }
 
-        // دالة للرجوع إلى الصفحة السابقة
-        function goBack() {
-            window.history.back();
-        }
-
-        // دالة لإتمام الدفع
-        function finalizePayment() {
-            if (invoiceData.status === "paid" || invoiceData.status === "partial") {
-                alert("تم إتمام الدفع بنجاح!");
-                window.location.href = "invoice-summary.html";
-            } else {
-                alert("يرجى تحديد حالة الدفع أولاً.");
-            }
+        function goToCustomerSelection() {
+            window.location.href = 'customer-selection.html';
         }
     </script>
 </body>
