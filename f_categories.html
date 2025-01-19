@@ -32,6 +32,14 @@
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
         }
 
+        .category-section {
+            margin-bottom: 20px;
+        }
+
+        .category-section h3 {
+            color: #2563eb;
+        }
+
         .categories {
             display: grid;
             grid-template-columns: repeat(2, 1fr);
@@ -118,44 +126,56 @@
 
     <!-- قائمة الفئات -->
     <div class="categories-container">
-        <h3>الفئات</h3>
-        <div class="categories">
-            <!-- فئة الرجال -->
-            <div class="category" onclick="addItem('قميص رجالي', 50)">
-                <span>👕</span>
-                قميص رجالي (50 درهم)
+        <!-- فئة الرجال -->
+        <div class="category-section">
+            <h3>رجال</h3>
+            <div class="categories">
+                <div class="category" onclick="addItem('قميص رجالي', 50)">
+                    <span>👕</span>
+                    قميص رجالي (50 درهم)
+                </div>
+                <div class="category" onclick="addItem('دراعية', 120)">
+                    <span>🩲</span>
+                    دراعية (120 درهم)
+                </div>
+                <div class="category" onclick="addItem('جابادور', 150)">
+                    <span>🧥</span>
+                    جابادور (150 درهم)
+                </div>
+                <div class="category" onclick="addItem('كومبلي', 200)">
+                    <span>👔</span>
+                    كومبلي (200 درهم)
+                </div>
             </div>
-            <div class="category" onclick="addItem('دراعية', 120)">
-                <span>🩲</span>
-                دراعية (120 درهم)
-            </div>
-            <div class="category" onclick="addItem('جابادور', 150)">
-                <span>🧥</span>
-                جابادور (150 درهم)
-            </div>
-            <div class="category" onclick="addItem('كومبلي', 200)">
-                <span>👔</span>
-                كومبلي (200 درهم)
-            </div>
+        </div>
 
-            <!-- فئة النساء -->
-            <div class="category" onclick="addItem('فستان', 100)">
-                <span>👗</span>
-                فستان (100 درهم)
+        <!-- فئة النساء -->
+        <div class="category-section">
+            <h3>نساء</h3>
+            <div class="categories">
+                <div class="category" onclick="addItem('فستان', 100)">
+                    <span>👗</span>
+                    فستان (100 درهم)
+                </div>
+                <div class="category" onclick="addItem('ملحفة', 130)">
+                    <span>🧣</span>
+                    ملحفة (130 درهم)
+                </div>
             </div>
-            <div class="category" onclick="addItem('ملحفة', 130)">
-                <span>🧣</span>
-                ملحفة (130 درهم)
-            </div>
+        </div>
 
-            <!-- فئة الأطفال -->
-            <div class="category" onclick="addItem('فستان أطفال', 60)">
-                <span>👗</span>
-                فستان أطفال (60 درهم)
-            </div>
-            <div class="category" onclick="addItem('بدلة أطفال', 70)">
-                <span>🩳</span>
-                بدلة أطفال (70 درهم)
+        <!-- فئة الأطفال -->
+        <div class="category-section">
+            <h3>أطفال</h3>
+            <div class="categories">
+                <div class="category" onclick="addItem('فستان أطفال', 60)">
+                    <span>👗</span>
+                    فستان أطفال (60 درهم)
+                </div>
+                <div class="category" onclick="addItem('بدلة أطفال', 70)">
+                    <span>🩳</span>
+                    بدلة أطفال (70 درهم)
+                </div>
             </div>
         </div>
     </div>
@@ -223,7 +243,6 @@
         }
 
         function goToNextPage() {
-            // الانتقال إلى الصفحة التالية
             window.location.href = "summary.html";
         }
     </script>
