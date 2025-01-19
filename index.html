@@ -1,74 +1,101 @@
 <!DOCTYPE html>
-<html lang="ar">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>مصبنة مشاء الله</title>
-    <link rel="stylesheet" href="styles.css">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            background: linear-gradient(to bottom, #4CAF50, #eafaf1);
+            color: white;
+            margin: 0;
+            padding: 0;
+            overflow: hidden;
+        }
+
+        .container {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            animation: fadeIn 2s ease-in-out;
+        }
+
+        h1 {
+            font-size: 48px;
+            margin-bottom: 20px;
+            text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.3);
+        }
+
+        input[type="password"] {
+            padding: 10px;
+            font-size: 18px;
+            border: none;
+            border-radius: 5px;
+            width: 300px;
+            margin: 10px auto;
+            display: block;
+        }
+
+        button {
+            padding: 10px 20px;
+            font-size: 18px;
+            color: white;
+            background-color: #333;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        button:hover {
+            background-color: #555;
+        }
+
+        p {
+            margin-top: 20px;
+            font-size: 16px;
+        }
+
+        .error {
+            color: #ff6b6b;
+            margin-top: 10px;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translate(-50%, -60%);
+            }
+            to {
+                opacity: 1;
+                transform: translate(-50%, -50%);
+            }
+        }
+    </style>
 </head>
 <body>
-    <header>
-        <h1 class="decorated-title">مصبنة مشاء الله</h1>
-    </header>
-    <main>
-        <section id="code-entry">
-            <h2>أدخل الكود للدخول</h2>
-            <input type="password" id="entry-code" placeholder="أدخل الكود" required>
-            <button onclick="validateCode()">دخول</button>
-            <p id="error-message" style="color: red; display: none;">الكود غير صحيح، حاول مرة أخرى.</p>
-        </section>
-        <section id="main-content" style="display: none;">
-            <section id="customer-options">
-                <h2>اختر الخيار</h2>
-                <button onclick="showPage('new-customer')">إدخال زبون جديد</button>
-                <button onclick="showPage('existing-customer')">اختيار الزبون</button>
-            </section>
-            <section id="new-customer" style="display: none;">
-                <h2>إدخال زبون جديد</h2>
-                <label for="customer-name">اسم الزبون:</label>
-                <input type="text" id="customer-name" placeholder="أدخل اسم الزبون" required>
-                <label for="customer-phone">رقم الهاتف:</label>
-                <input type="text" id="customer-phone" placeholder="أدخل رقم الهاتف" required>
-                <button onclick="showCategories()">التالي</button>
-            </section>
-            <section id="existing-customer" style="display: none;">
-                <h2>اختيار الزبون</h2>
-                <!-- إضافة محتوى اختيار الزبون هنا -->
-            </section>
-            <section id="categories" style="display: none;">
-                <h2>اختر الفئة</h2>
-                <div class="category-list">
-                    <div class="category-item" onclick="showItems('women')">ملابس النساء</div>
-                    <div class="category-item" onclick="showItems('men')">ملابس الرجال</div>
-                    <div class="category-item" onclick="showItems('kids')">ملابس الأطفال</div>
-                    <div class="category-item" onclick="showItems('bedding')">الأفرشة</div>
-                    <div class="category-item" onclick="showItems('shoes')">الأحذية</div>
-                </div>
-            </section>
-            <section id="item-info" style="display: none;">
-                <h2>إدخال تفاصيل القطع</h2>
-                <label for="item-type">نوع القطعة:</label>
-                <select id="item-type" name="item-type" required>
-                    <!-- الخيارات ستتغير بناءً على الفئة المختارة -->
-                </select>
-                <label for="item-price">سعر القطعة:</label>
-                <input type="number" id="item-price" name="item-price" required>
-                <button onclick="addItem()">إضافة القطعة</button>
-                <button onclick="showSummary()">عرض الملخص</button>
-                <div id="items-list"></div>
-            </section>
-            <section id="summary" style="display: none;">
-                <h2>ملخص الطلب</h2>
-                <div id="summary-list"></div>
-                <div id="total-price"></div>
-                <button onclick="showPage('categories')">إضافة المزيد</button>
-            </section>
-            <section id="settings" style="display: none;">
-                <h2>الإعدادات</h2>
-                <p>هنا يمكنك تعديل إعدادات الموقع.</p>
-            </section>
-        </section>
-    </main>
-    <script src="script.js"></script>
+    <div class="container">
+        <h1>🌟 مرحباً بكم في مصبنة مشاء الله 🌟</h1>
+        <p>🔒 يرجى إدخال الكود للمتابعة:</p>
+        <input type="password" id="accessCode" placeholder="أدخل الكود هنا">
+        <button onclick="validateCode()">دخول</button>
+        <p id="error" class="error"></p>
+    </div>
+
+    <script>
+        function validateCode() {
+            const code = document.getElementById("accessCode").value;
+            const errorElement = document.getElementById("error");
+
+            if (code === "202501") {
+                window.location.href = "main.html";
+            } else {
+                errorElement.textContent = "❌ الكود غير صحيح. حاول مرة أخرى.";
+            }
+        }
+    </script>
 </body>
 </html>
