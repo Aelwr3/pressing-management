@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="ar">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>مصبنة مشاء الله</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background: linear-gradient(to right, #00aaff, #66ccff);
+            color: #333;
+            direction: rtl;
+            padding: 20px;
+        }
+
+        h2, h3 {
+            text-align: center;
+            font-size: 2em;
+            color: #ffffff;
+            margin-bottom: 20px;
+        }
+
+        .container {
+            background-color: #ffffff;
+            border-radius: 10px;
+            padding: 20px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        button {
+            background-color: #0077cc;
+            color: white;
+            border: none;
+            padding: 15px 25px;
+            margin: 10px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 1.1em;
+            transition: background-color 0.3s ease;
+        }
+
+        button:hover {
+            background-color: #005fa3;
+        }
+
+        input[type="text"], select {
+            width: 100%;
+            padding: 10px;
+            margin: 10px 0;
+            border: 2px solid #ddd;
+            border-radius: 5px;
+            font-size: 1em;
+        }
+
+        ul {
+            list-style-type: none;
+            padding: 0;
+        }
+
+        li {
+            background-color: #f4f4f4;
+            margin: 10px;
+            padding: 10px;
+            border-radius: 5px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        li button {
+            background-color: #ff4040;
+            color: white;
+            padding: 5px 10px;
+            font-size: 0.9em;
+            border-radius: 5px;
+        }
+
+        li button:hover {
+            background-color: #cc3333;
+        }
+
+        .emoji {
+            font-size: 1.5em;
+        }
+
+        .form-container {
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- صفحة اختيار الزبون أو إضافته -->
+    <div id="page2" class="container">
+        <h2>اختار الزبون</h2>
+        
+        <button onclick="addNewCustomer()">إضافة زبون جديد 🆕</button>
+        <button onclick="chooseExistingCustomer()">اختيار زبون موجود 🧑‍🤝‍🧑</button>
+
+        <!-- نموذج إضافة الزبون الجديد -->
+        <div id="new-customer-form" style="display:none;">
+            <h3>إضافة زبون جديد ✨</h3>
+            <form id="customer-form">
+                <label for="customer-name">اسم الزبون:</label>
+                <input type="text" id="customer-name" required>
+                <label for="customer-phone">رقم الهاتف:</label>
+                <input type="text" id="customer-phone" required>
+                <button type="submit">إضافة الزبون ➕</button>
+            </form>
+        </div>
+
+        <!-- قائمة الزبائن الموجودين -->
+        <div id="existing-customers" style="display:none;">
+            <h3>اختار زبون من القائمة 📋</h3>
+            <select id="customer-select">
+                <!-- قائمة الزبائن ستُضاف هنا برمجيًا -->
+            </select>
+            <button onclick="chooseCustomer()">اختار الزبون ✅</button>
+            <ul id="customer-list">
+                <!-- قائمة الزبائن مع زر الحذف ستُضاف هنا -->
+            </ul>
+        </div>
+    </div>
+
+    <script>
+        // تخزين الزبائن في الذاكرة المحلية
+        let customers = JSON.parse(localStorage.getItem("customers")) || [];
+
+        // إضافة زبون جديد
+        document.getElementById("customer-form")?.addEventListener("submit", function (e) {
+            e.preventDefault();
+
+            let customerName = document.getElementById("customer-name").value;
+            let customerPhone = document.getElementById("customer-phone").value;
+
+            // إضافة الزبون إلى القائمة
+            customers.push({name: customerName, phone: customerPhone});
+            localStorage.setItem("customers", JSON.stringify(customers));
+
+            // التوجه إلى صفحة الفئات بعد إضافة الزبون
+            goToFatora();
+        });
+
+        // اختيار زبون موجود
+        function chooseCustomer() {
+            let selectedCustomer = document.getElementById("customer-select").value;
+            console.log("تم اختيار الزبون: ", selectedCustomer);
+
+            // التوجه إلى صفحة الفئات
+            goToFatora();
+        }
+
+        // عرض قائمة الزبائن الموجودين
+        function chooseExistingCustomer() {
+            const customerSelect = document.getElementById("customer-select");
+            customerSelect.innerHTML = ""; // إعادة تحميل القائمة
+            customers.forEach((customer, index) => {
+                const option = document.createElement("option");
+                option.value = index;
+                option.textContent = `${customer.name} - ${customer.phone}`;
+                customerSelect.appendChild(option);
+
+                // إضافة الزبائن مع زر الحذف
+                const listItem = document.createElement("li");
+                listItem.textContent = `${customer.name} - ${customer.phone}`;
+                
+                // زر الحذف للزبون
+                const deleteButton = document.createElement("button");
+                deleteButton.textContent = "حذف ❌";
+                deleteButton.onclick = function() {
+                    deleteCustomer(index);
+                };
+                
+                listItem.appendChild(deleteButton);
+                document.getElementById("customer-list").appendChild(listItem);
+            });
+
+            document.getElementById("existing-customers").style.display = "block";
+            document.getElementById("new-customer-form").style.display = "none";
+        }
+
+        // إظهار نموذج إضافة الزبون الجديد
+        function addNewCustomer() {
+            document.getElementById("new-customer-form").style.display = "block";
+            document.getElementById("existing-customers").style.display = "none";
+        }
+
+        // الانتقال إلى صفحة الفئات
+        function goToFatora() {
+            document.getElementById("page2").style.display = "none";
+            document.getElementById("page3").style.display = "block";
+        }
+
+        // حذف الزبون من الذاكرة المحلية
+        function deleteCustomer(index) {
+            // حذف الزبون من القائمة
+            customers.splice(index, 1);
+            localStorage.setItem("customers", JSON.stringify(customers));
+
+            // تحديث الواجهة
+            chooseExistingCustomer();
+        }
+
+        // عرض الزبائن المخزنين عند تحميل الصفحة
+        if (customers.length > 0) {
+            document.getElementById("existing-customers").style.display = "block";
+        }
+    </script>
+    
+</body>
+</html>
