@@ -78,6 +78,14 @@
             padding: 5px;
         }
 
+        .selected-items ul li .price {
+            width: 80px;
+            text-align: center;
+            border: 1px solid #1e3a8a;
+            border-radius: 5px;
+            padding: 5px;
+        }
+
         .next-btn {
             padding: 10px 20px;
             background-color: #1e3a8a;
@@ -176,7 +184,8 @@
                 listItem.innerHTML = `
                     ${item.name} - 
                     <input type="number" value="${item.quantity}" min="1" onchange="updateQuantity('${item.name}', this.value)">
-                    x ${item.price} درهم
+                    x 
+                    <input class="price" type="number" value="${item.price}" min="1" onchange="updatePrice('${item.name}', this.value)"> درهم
                 `;
                 list.appendChild(listItem);
             });
@@ -188,6 +197,14 @@
             const item = items.find(item => item.name === name);
             if (item) {
                 item.quantity = parseInt(quantity);
+                updateSelectedItems();
+            }
+        }
+
+        function updatePrice(name, price) {
+            const item = items.find(item => item.name === name);
+            if (item) {
+                item.price = parseInt(price);
                 updateSelectedItems();
             }
         }
