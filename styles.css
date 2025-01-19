@@ -93,3 +93,7 @@ button:hover {
     margin-top: 2em;
     color: #ffffff;
 }
+
+#new-item-info {
+    display: none;
+}
