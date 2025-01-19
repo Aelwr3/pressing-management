@@ -180,7 +180,7 @@
             "أفرشة": ["بطانية", "وسادة", "غطاء", "سجاد", "ستائر"]
         };
 
-        const selectedItems = [];
+        let selectedItems = JSON.parse(localStorage.getItem('selectedItems')) || [];
 
         function showCategory(category) {
             const itemsDiv = document.getElementById("items");
@@ -204,6 +204,7 @@
                 selectedItems.push({ name: itemName, quantity: 1, price: 0 });
             }
             updateSelectedItems();
+            localStorage.setItem('selectedItems', JSON.stringify(selectedItems));
         }
 
         function updateSelectedItems() {
@@ -232,17 +233,23 @@
         function updateQuantity(index, value) {
             selectedItems[index].quantity = parseInt(value);
             updateSelectedItems();
+            localStorage.setItem('selectedItems', JSON.stringify(selectedItems));
         }
 
         function updatePrice(index, value) {
             selectedItems[index].price = parseFloat(value);
             updateSelectedItems();
+            localStorage.setItem('selectedItems', JSON.stringify(selectedItems));
         }
 
         function removeItem(index) {
             selectedItems.splice(index, 1);
             updateSelectedItems();
+            localStorage.setItem('selectedItems', JSON.stringify(selectedItems));
         }
+
+        // Load initial data on page load
+        updateSelectedItems();
     </script>
 </body>
 </html>
