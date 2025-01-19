@@ -8,56 +8,47 @@
         body {
             font-family: 'Arial', sans-serif;
             background-color: #f3f4f6;
-            text-align: center;
-            padding: 20px;
             color: #333;
+            text-align: center;
         }
-
         header {
             background-color: #1d4ed8;
             color: white;
             padding: 15px;
             font-size: 24px;
             font-weight: bold;
+            text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.2);
         }
-
-        .invoice-container {
-            background-color: white;
-            padding: 20px;
+        .invoice-details {
+            margin: 20px;
+            background-color: #fff;
             border-radius: 8px;
-            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-            max-width: 600px;
-            margin: 20px auto;
+            padding: 20px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
         }
-
-        .invoice-header {
-            font-size: 20px;
-            font-weight: bold;
-            color: #1d4ed8;
-        }
-
-        .invoice-item {
+        .invoice-details p {
             font-size: 18px;
-            margin: 10px 0;
+            margin: 5px 0;
         }
-
-        .navigation-buttons {
-            margin-top: 30px;
+        .invoice-details .total {
+            font-size: 22px;
+            font-weight: bold;
+            color: #22c55e;
         }
-
-        .nav-button {
+        .buttons {
+            margin-top: 20px;
+        }
+        .buttons button {
+            padding: 10px 20px;
             background-color: #3b82f6;
             color: white;
-            padding: 10px 20px;
             border: none;
             border-radius: 8px;
+            font-size: 16px;
             cursor: pointer;
             transition: background-color 0.3s ease;
-            font-size: 16px;
-            margin: 0 10px;
         }
-
-        .nav-button:hover {
+        .buttons button:hover {
             background-color: #2563eb;
         }
     </style>
@@ -65,50 +56,32 @@
 <body>
     <header>عرض الفاتورة</header>
 
-    <div class="invoice-container">
-        <div class="invoice-header">الفاتورة رقم <span id="invoiceNumber">12345</span></div>
+    <div class="invoice-details">
+        <p><strong>اسم الزبون:</strong> <span id="customerName"></span></p>
+        <p><strong>الملابس المختارة:</strong> <span id="itemsList"></span></p>
+        <p><strong>المجموع الكلي:</strong> <span id="totalPrice">0 درهم</span></p>
+    </div>
 
-        <div class="invoice-content">
-            <div class="invoice-item"><strong>اسم الزبون:</strong> <span id="customerName">أحمد بن عبد الله</span></div>
-            <div class="invoice-item"><strong>الملابس:</strong> <span id="items">قميص، بنطال، حذاء</span></div>
-            <div class="invoice-item"><strong>الثمن الإجمالي:</strong> <span id="totalPrice">1000 درهم</span></div>
-        </div>
-
-        <div class="navigation-buttons">
-            <button class="nav-button" onclick="goBack()">العودة</button>
-            <button class="nav-button" onclick="nextPage()">التالي</button>
-        </div>
+    <div class="buttons">
+        <button onclick="goToPayment()">التالي</button>
+        <button onclick="goToCustomerSelection()">العودة إلى إضافة زبون</button>
     </div>
 
     <script>
-        // بيانات الفاتورة
-        const invoiceData = {
-            invoiceNumber: "12345",
-            customerName: "أحمد بن عبد الله",
-            items: "قميص، بنطال، حذاء",
-            totalPrice: 1000
-        };
-
-        // حفظ البيانات في localStorage
-        localStorage.setItem("invoiceData", JSON.stringify(invoiceData));
-
-        // تحميل البيانات من localStorage
-        const storedInvoice = JSON.parse(localStorage.getItem("invoiceData"));
-        if (storedInvoice) {
-            document.getElementById("invoiceNumber").innerText = storedInvoice.invoiceNumber;
-            document.getElementById("customerName").innerText = storedInvoice.customerName;
-            document.getElementById("items").innerText = storedInvoice.items;
-            document.getElementById("totalPrice").innerText = `${storedInvoice.totalPrice} درهم`;
+        // استرجاع البيانات من LocalStorage
+        const invoice = JSON.parse(localStorage.getItem("invoice"));
+        if (invoice) {
+            document.getElementById("customerName").textContent = invoice.customerName;
+            document.getElementById("itemsList").textContent = invoice.items.join(", ");
+            document.getElementById("totalPrice").textContent = `${invoice.total} درهم`;
         }
 
-        // دالة للرجوع إلى الصفحة السابقة
-        function goBack() {
-            window.history.back();
+        function goToPayment() {
+            window.location.href = 'payment-status.html';
         }
 
-        // دالة للانتقال إلى صفحة الدفع
-        function nextPage() {
-            window.location.href = "payment-status.html";
+        function goToCustomerSelection() {
+            window.location.href = 'customer-selection.html';
         }
     </script>
 </body>
