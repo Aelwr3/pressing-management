@@ -74,6 +74,13 @@
             margin-top: 20px;
         }
 
+        .error-message {
+            color: red;
+            font-size: 16px;
+            margin-top: 10px;
+            font-weight: bold;
+        }
+
         @keyframes fadeIn {
             from {
                 opacity: 0;
@@ -105,17 +112,24 @@
             <input type="text" id="code" placeholder="أدخل الكود هنا">
             <button class="submit-btn" onclick="validateCode()">تأكيد</button>
         </div>
-        <div class="emoji">🔑</div> <!-- إيموجي لقفل أو أمان -->
+        <div class="emoji">🔑</div> <!-- إيموجي للقفل أو أمان -->
+        <div id="error-message" class="error-message" style="display:none;">
+            <span>🚫 الكود غير صحيح! حاول مرة أخرى.</span>
+        </div> <!-- رسالة الخطأ التي ستظهر عند الكود الغير صحيح -->
     </div>
 
     <script>
         function validateCode() {
             const code = document.getElementById("code").value;
+            const errorMessage = document.getElementById("error-message");
+
             if (code === "202501") {
                 // عند إدخال الكود بشكل صحيح، يتم الانتقال إلى الصفحة التالية
                 window.location.href = "f_categories.html";  // التأكد من المسار الصحيح للصفحة الثانية
             } else {
-                alert("الكود غير صحيح!");
+                // إذا كان الكود غير صحيح، إظهار رسالة الخطأ مع إيموجي
+                errorMessage.style.display = "block";  // إظهار الرسالة
+                errorMessage.style.animation = "fadeIn 0.5s ease-out"; // إضافة تأثير الرسالة
             }
         }
     </script>
