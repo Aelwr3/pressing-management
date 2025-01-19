@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>إدارة المصبنة - مصبنة مشاء الله</title>
+    <title>مصبنة مشاء الله</title>
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
@@ -11,26 +11,58 @@
         <h1 class="decorated-title">مصبنة مشاء الله</h1>
     </header>
     <main>
-        <section id="categories">
-            <h2>اختر الفئة</h2>
-            <div class="category-list">
-                <div class="category-item" onclick="showItems('women')">ملابس النساء</div>
-                <div class="category-item" onclick="showItems('men')">ملابس الرجال</div>
-                <div class="category-item" onclick="showItems('kids')">ملابس الأطفال</div>
-                <div class="category-item" onclick="showItems('bedding')">الأفرشة</div>
-                <div class="category-item" onclick="showItems('shoes')">الأحذية</div>
-            </div>
+        <section id="code-entry">
+            <h2>أدخل الكود للدخول</h2>
+            <input type="password" id="entry-code" placeholder="أدخل الكود" required>
+            <button onclick="validateCode()">دخول</button>
+            <p id="error-message" style="color: red; display: none;">الكود غير صحيح، حاول مرة أخرى.</p>
         </section>
-        <section id="item-info" style="display:none;">
-            <h2>إدخال تفاصيل القطع</h2>
-            <label for="item-type">نوع القطعة:</label>
-            <select id="item-type" name="item-type" required>
-                <!-- الخيارات ستتغير بناءً على الفئة المختارة -->
-            </select>
-            <label for="item-price">سعر القطعة:</label>
-            <input type="number" id="item-price" name="item-price" required>
-            <button onclick="addItem()">إضافة القطعة</button>
-            <div id="items-list"></div>
+        <section id="main-content" style="display: none;">
+            <section id="customer-options">
+                <h2>اختر الخيار</h2>
+                <button onclick="showPage('new-customer')">إدخال زبون جديد</button>
+                <button onclick="showPage('existing-customer')">اختيار الزبون</button>
+            </section>
+            <section id="new-customer" style="display: none;">
+                <h2>إدخال زبون جديد</h2>
+                <button onclick="showCategories()">متابعة</button>
+            </section>
+            <section id="existing-customer" style="display: none;">
+                <h2>اختيار الزبون</h2>
+                <!-- إضافة محتوى اختيار الزبون هنا -->
+            </section>
+            <section id="categories" style="display: none;">
+                <h2>اختر الفئة</h2>
+                <div class="category-list">
+                    <div class="category-item" onclick="showItems('women')">ملابس النساء</div>
+                    <div class="category-item" onclick="showItems('men')">ملابس الرجال</div>
+                    <div class="category-item" onclick="showItems('kids')">ملابس الأطفال</div>
+                    <div class="category-item" onclick="showItems('bedding')">الأفرشة</div>
+                    <div class="category-item" onclick="showItems('shoes')">الأحذية</div>
+                </div>
+            </section>
+            <section id="item-info" style="display: none;">
+                <h2>إدخال تفاصيل القطع</h2>
+                <label for="item-type">نوع القطعة:</label>
+                <select id="item-type" name="item-type" required>
+                    <!-- الخيارات ستتغير بناءً على الفئة المختارة -->
+                </select>
+                <label for="item-price">سعر القطعة:</label>
+                <input type="number" id="item-price" name="item-price" required>
+                <button onclick="addItem()">إضافة القطعة</button>
+                <button onclick="showSummary()">عرض الملخص</button>
+                <div id="items-list"></div>
+            </section>
+            <section id="summary" style="display: none;">
+                <h2>ملخص الطلب</h2>
+                <div id="summary-list"></div>
+                <div id="total-price"></div>
+                <button onclick="showPage('categories')">إضافة المزيد</button>
+            </section>
+            <section id="settings" style="display: none;">
+                <h2>الإعدادات</h2>
+                <p>هنا يمكنك تعديل إعدادات الموقع.</p>
+            </section>
         </section>
     </main>
     <script src="script.js"></script>
