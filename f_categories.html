@@ -8,74 +8,54 @@
     <style>
         body {
             font-family: 'Poppins', sans-serif;
-            background-color: #f1f1f1;
             margin: 0;
             padding: 0;
             background: linear-gradient(to bottom, #1e3a8a, #3b82f6);
             color: white;
             text-align: center;
-            animation: fadeIn 1s ease-out;
         }
 
         h1 {
             font-family: 'Pacifico', cursive;
             font-size: 40px;
-            margin-top: 20px;
+            margin: 20px;
             text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.2);
+        }
+
+        .categories, .selected-items {
+            max-width: 800px;
+            margin: 20px auto;
+            background: rgba(255, 255, 255, 0.9);
+            border-radius: 10px;
+            padding: 15px;
+            color: #1e3a8a;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
         }
 
         .categories {
             display: grid;
             grid-template-columns: repeat(2, 1fr);
-            gap: 15px;
-            padding: 20px;
-            margin: 0 auto;
-            max-width: 600px;
+            gap: 10px;
         }
 
         .category {
-            background-color: white;
+            padding: 15px;
+            background: white;
             color: #1e3a8a;
             border-radius: 10px;
-            padding: 15px;
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
             text-align: center;
             cursor: pointer;
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            transition: transform 0.3s ease;
         }
 
         .category:hover {
             transform: scale(1.05);
-            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3);
         }
 
         .category span {
             font-size: 30px;
-        }
-
-        .category h2 {
-            margin: 10px 0;
-            font-size: 18px;
-        }
-
-        .category p {
-            margin: 0;
-            font-size: 16px;
-        }
-
-        .selected-items {
-            background-color: rgba(0, 0, 0, 0.6);
-            padding: 15px;
-            border-radius: 10px;
-            margin: 20px;
-            max-width: 600px;
-            margin: 20px auto;
-            color: white;
-            text-align: left;
-        }
-
-        .selected-items h3 {
-            margin-bottom: 10px;
+            display: block;
         }
 
         .selected-items ul {
@@ -84,13 +64,18 @@
         }
 
         .selected-items ul li {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
             margin-bottom: 10px;
         }
 
-        .total {
-            margin-top: 10px;
-            font-size: 20px;
-            font-weight: bold;
+        .selected-items ul li input {
+            width: 60px;
+            text-align: center;
+            border: 1px solid #1e3a8a;
+            border-radius: 5px;
+            padding: 5px;
         }
 
         .next-btn {
@@ -101,113 +86,66 @@
             border-radius: 5px;
             font-size: 18px;
             cursor: pointer;
-            margin-top: 20px;
             transition: background-color 0.3s ease;
+            margin-top: 20px;
         }
 
         .next-btn:hover {
             background-color: #2563eb;
         }
-
-        @keyframes fadeIn {
-            from {
-                opacity: 0;
-            }
-            to {
-                opacity: 1;
-            }
-        }
     </style>
 </head>
 <body>
     <h1>اختيار الملابس</h1>
+
+    <!-- قائمة الملابس المختارة -->
     <div class="selected-items">
         <h3>الملابس المختارة:</h3>
-        <ul id="item-list"></ul>
-        <p class="total" id="total-price">المجموع: 0 درهم</p>
+        <ul id="selected-list"></ul>
+        <p id="total-price">المجموع: 0 درهم</p>
     </div>
+
+    <!-- قائمة الفئات -->
     <div class="categories">
         <!-- فئة الرجال -->
         <div class="category" onclick="addItem('قميص رجالي', 50)">
             <span>👕</span>
-            <h2>قميص رجالي</h2>
-            <p>50 درهم</p>
+            قميص رجالي (50 درهم)
         </div>
         <div class="category" onclick="addItem('دراعية', 120)">
             <span>🩲</span>
-            <h2>دراعية</h2>
-            <p>120 درهم</p>
+            دراعية (120 درهم)
         </div>
         <div class="category" onclick="addItem('جابادور', 150)">
             <span>🧥</span>
-            <h2>جابادور</h2>
-            <p>150 درهم</p>
+            جابادور (150 درهم)
         </div>
         <div class="category" onclick="addItem('كومبلي', 200)">
             <span>👔</span>
-            <h2>كومبلي</h2>
-            <p>200 درهم</p>
-        </div>
-        <div class="category" onclick="addItem('فيست', 80)">
-            <span>🦺</span>
-            <h2>فيست</h2>
-            <p>80 درهم</p>
+            كومبلي (200 درهم)
         </div>
 
         <!-- فئة النساء -->
         <div class="category" onclick="addItem('فستان', 100)">
             <span>👗</span>
-            <h2>فستان</h2>
-            <p>100 درهم</p>
+            فستان (100 درهم)
         </div>
         <div class="category" onclick="addItem('ملحفة', 130)">
             <span>🧣</span>
-            <h2>ملحفة</h2>
-            <p>130 درهم</p>
-        </div>
-        <div class="category" onclick="addItem('جاكيت نسائي', 90)">
-            <span>🧥</span>
-            <h2>جاكيت نسائي</h2>
-            <p>90 درهم</p>
-        </div>
-        <div class="category" onclick="addItem('عباية', 150)">
-            <span>🩱</span>
-            <h2>عباية</h2>
-            <p>150 درهم</p>
-        </div>
-        <div class="category" onclick="addItem('تنورة', 70)">
-            <span>👚</span>
-            <h2>تنورة</h2>
-            <p>70 درهم</p>
+            ملحفة (130 درهم)
         </div>
 
         <!-- فئة الأطفال -->
-        <div class="category" onclick="addItem('بدلة أطفال', 70)">
-            <span>🩳</span>
-            <h2>بدلة أطفال</h2>
-            <p>70 درهم</p>
-        </div>
         <div class="category" onclick="addItem('فستان أطفال', 60)">
             <span>👗</span>
-            <h2>فستان أطفال</h2>
-            <p>60 درهم</p>
+            فستان أطفال (60 درهم)
         </div>
-        <div class="category" onclick="addItem('بيجامة أطفال', 50)">
-            <span>👕</span>
-            <h2>بيجامة أطفال</h2>
-            <p>50 درهم</p>
-        </div>
-        <div class="category" onclick="addItem('ملحفة أطفال', 40)">
-            <span>🧣</span>
-            <h2>ملحفة أطفال</h2>
-            <p>40 درهم</p>
-        </div>
-        <div class="category" onclick="addItem('فيست أطفال', 30)">
-            <span>🦺</span>
-            <h2>فيست أطفال</h2>
-            <p>30 درهم</p>
+        <div class="category" onclick="addItem('بدلة أطفال', 70)">
+            <span>🩳</span>
+            بدلة أطفال (70 درهم)
         </div>
     </div>
+
     <button class="next-btn" onclick="goToNextPage()">التالي</button>
 
     <script>
@@ -215,14 +153,43 @@
         let totalPrice = 0;
 
         function addItem(name, price) {
-            items.push({ name, price });
-            totalPrice += price;
+            const existingItem = items.find(item => item.name === name);
+            if (existingItem) {
+                existingItem.quantity += 1;
+            } else {
+                items.push({ name, price, quantity: 1 });
+            }
+            updateSelectedItems();
+        }
 
-            const itemList = document.getElementById("item-list");
+        function updateSelectedItems() {
+            const list = document.getElementById("selected-list");
             const totalPriceElement = document.getElementById("total-price");
+            list.innerHTML = "";
 
-            itemList.innerHTML = items.map(item => `<li>${item.name} - ${item.price} درهم</li>`).join("");
+            totalPrice = 0;
+
+            items.forEach(item => {
+                totalPrice += item.price * item.quantity;
+                const listItem = document.createElement("li");
+
+                listItem.innerHTML = `
+                    ${item.name} - 
+                    <input type="number" value="${item.quantity}" min="1" onchange="updateQuantity('${item.name}', this.value)">
+                    x ${item.price} درهم
+                `;
+                list.appendChild(listItem);
+            });
+
             totalPriceElement.textContent = `المجموع: ${totalPrice} درهم`;
+        }
+
+        function updateQuantity(name, quantity) {
+            const item = items.find(item => item.name === name);
+            if (item) {
+                item.quantity = parseInt(quantity);
+                updateSelectedItems();
+            }
         }
 
         function goToNextPage() {
