@@ -3,76 +3,62 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>فاتورة الطلب</title>
+    <title>الفاتورة</title>
     <style>
         body {
             font-family: 'Arial', sans-serif;
-            background-color: #f1f5f9;
-            color: #333;
+            background-color: #f3f4f6;
             margin: 0;
-            padding: 20px;
+            padding: 0;
             text-align: center;
+            color: #333;
         }
 
         header {
-            background-color: #1e40af;
+            background-color: #1d4ed8;
             color: white;
             padding: 15px;
-            font-size: 24px;
+            font-size: 28px;
             font-weight: bold;
-            border-radius: 10px;
-            margin-bottom: 20px;
+            text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.2);
         }
 
         .invoice {
-            background-color: white;
-            margin: 0 auto;
-            padding: 20px;
-            max-width: 600px;
-            border-radius: 10px;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-            text-align: right;
-        }
-
-        .invoice h3 {
-            color: #1e40af;
-            margin-bottom: 15px;
-        }
-
-        .invoice p {
-            margin: 5px 0;
-            line-height: 1.5;
+            margin-top: 30px;
+            padding: 15px;
         }
 
         .invoice table {
-            width: 100%;
+            width: 80%;
+            margin: 0 auto;
             border-collapse: collapse;
-            margin: 20px 0;
         }
 
-        .invoice table th, .invoice table td {
-            border: 1px solid #e5e7eb;
+        .invoice th, .invoice td {
+            border: 1px solid #d1d5db;
             padding: 10px;
             text-align: center;
         }
 
-        .invoice table th {
+        .invoice th {
             background-color: #3b82f6;
             color: white;
         }
 
-        .payment-options {
-            margin: 20px 0;
+        .total {
+            font-size: 18px;
+            font-weight: bold;
+            margin-top: 15px;
         }
 
-        .payment-options label {
-            margin-right: 15px;
+        .back-button {
+            margin-top: 20px;
         }
 
-        .confirm-button {
-            background-color: #22c55e;
-            color: white;
+        .back-button button {
             padding: 10px 20px;
+            background-color: #3b82f6;
+            color: white;
             border: none;
             border-radius: 8px;
             font-size: 18px;
@@ -80,103 +66,98 @@
             transition: transform 0.3s ease, background-color 0.3s ease;
         }
 
-        .confirm-button:hover {
-            background-color: #16a34a;
+        .back-button button:hover {
+            background-color: #2563eb;
             transform: scale(1.05);
+        }
+
+        .invoice-header {
+            margin-bottom: 20px;
+            text-align: center;
         }
     </style>
 </head>
 <body>
-    <header>تفاصيل الطلب</header>
+    <header>الفاتورة</header>
 
     <div class="invoice">
-        <h3>فاتورة الطلب</h3>
-        <p>اسم الزبون: <span id="customerName">---</span></p>
-        <p>رقم الفاتورة: <span id="invoiceNumber">---</span></p>
-        <p>التاريخ: <span id="currentDate">---</span></p>
+        <div class="invoice-header">
+            <p id="invoiceDate"></p>
+            <p id="invoiceNumber"></p>
+        </div>
 
+        <h3>تفاصيل الفاتورة</h3>
         <table>
             <thead>
                 <tr>
                     <th>العنصر</th>
                     <th>الكمية</th>
                     <th>السعر</th>
-                    <th>الإجمالي</th>
+                    <th>إجمالي</th>
                 </tr>
             </thead>
-            <tbody id="orderItems">
-                <!-- يتم إدخال الملابس المختارة هنا ديناميكياً -->
-            </tbody>
+            <tbody id="invoiceItems"></tbody>
         </table>
-
-        <p>المجموع الكلي: <span id="totalAmount">0</span> درهم</p>
+        <div class="total" id="invoiceTotal">المجموع: 0 درهم</div>
     </div>
 
-    <div class="payment-options">
-        <h3>خيارات الدفع</h3>
-        <label>
-            <input type="radio" name="payment" value="كلي" checked>
-            دفع كلي
-        </label>
-        <label>
-            <input type="radio" name="payment" value="قسط">
-            دفع على أقساط
-        </label>
+    <div class="back-button">
+        <button onclick="window.location.href = 'index.html';">الرجوع إلى الفئات</button>
     </div>
-
-    <button class="confirm-button" onclick="confirmInvoice()">حفظ الفاتورة</button>
 
     <script>
-        // البيانات الواردة من الصفحة السابقة
-        const selectedItems = JSON.parse(localStorage.getItem("selectedItems")) || [];
-        const customerName = localStorage.getItem("customerName") || "غير معروف";
-        const invoiceNumber = localStorage.getItem("invoiceNumber") || Math.floor(Math.random() * 1000000);
-        const currentDate = new Date().toLocaleDateString("ar-EG");
+        // استرجاع البيانات المخزنة من localStorage
+        let selectedItems = JSON.parse(localStorage.getItem('selectedItems')) || [];
 
-        // تحميل البيانات إلى الفاتورة
-        function loadInvoice() {
-            document.getElementById("customerName").innerText = customerName;
-            document.getElementById("invoiceNumber").innerText = invoiceNumber;
-            document.getElementById("currentDate").innerText = currentDate;
+        // جلب التاريخ الحالي
+        function getCurrentDate() {
+            const date = new Date();
+            const day = String(date.getDate()).padStart(2, '0');
+            const month = String(date.getMonth() + 1).padStart(2, '0');
+            const year = date.getFullYear();
+            return `${day}/${month}/${year}`;
+        }
 
-            const orderItemsTable = document.getElementById("orderItems");
-            let totalAmount = 0;
+        // توليد الرقم التسلسلي
+        function generateInvoiceNumber() {
+            let invoiceNumber = localStorage.getItem('invoiceNumber');
+            if (!invoiceNumber) {
+                invoiceNumber = 1; // إذا لم يكن هناك رقم تسلسلي في الذاكرة، نبدأ من 1
+            } else {
+                invoiceNumber = parseInt(invoiceNumber) + 1; // زيادة الرقم التسلسلي
+            }
+            localStorage.setItem('invoiceNumber', invoiceNumber); // حفظ الرقم التسلسلي الجديد
+            return invoiceNumber;
+        }
+
+        function generateInvoice() {
+            // عرض التاريخ والرقم التسلسلي
+            document.getElementById('invoiceDate').innerText = `التاريخ: ${getCurrentDate()}`;
+            document.getElementById('invoiceNumber').innerText = `رقم الفاتورة: ${generateInvoiceNumber()}`;
+
+            // عرض العناصر المختارة
+            const invoiceItemsTable = document.getElementById("invoiceItems");
+            let totalPrice = 0;
 
             selectedItems.forEach(item => {
-                const row = document.createElement("tr");
                 const itemTotal = item.quantity * item.price;
-                totalAmount += itemTotal;
+                totalPrice += itemTotal;
 
+                const row = document.createElement("tr");
                 row.innerHTML = `
                     <td>${item.name}</td>
                     <td>${item.quantity}</td>
                     <td>${item.price} درهم</td>
                     <td>${itemTotal} درهم</td>
                 `;
-                orderItemsTable.appendChild(row);
+                invoiceItemsTable.appendChild(row);
             });
 
-            document.getElementById("totalAmount").innerText = totalAmount;
-
-            // حفظ البيانات للصفحات الموالية
-            localStorage.setItem("invoiceNumber", invoiceNumber);
-            localStorage.setItem("totalAmount", totalAmount);
+            document.getElementById("invoiceTotal").innerText = `المجموع: ${totalPrice} درهم`;
         }
 
-        // حفظ الفاتورة
-        function confirmInvoice() {
-            const paymentMethod = document.querySelector('input[name="payment"]:checked').value;
-
-            alert(`تم حفظ الفاتورة بنجاح:
-- اسم الزبون: ${customerName}
-- رقم الفاتورة: ${invoiceNumber}
-- طريقة الدفع: ${paymentMethod}
-- المجموع الكلي: ${document.getElementById("totalAmount").innerText} درهم
-`);
-        }
-
-        // تحميل الفاتورة عند فتح الصفحة
-        loadInvoice();
+        // تحميل الفاتورة عند تحميل الصفحة
+        generateInvoice();
     </script>
 </body>
-      </html>
+</html>
