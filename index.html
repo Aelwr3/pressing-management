@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ar">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -8,70 +8,88 @@
         body {
             font-family: Arial, sans-serif;
             text-align: center;
-            background: linear-gradient(to bottom, #4CAF50, #eafaf1);
+            background: linear-gradient(to bottom right, #4CAF50, #81C784, #C8E6C9); /* خلفية بتدرج الألوان */
             color: white;
             margin: 0;
             padding: 0;
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
             overflow: hidden;
         }
 
         .container {
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
+            text-align: center;
             animation: fadeIn 2s ease-in-out;
         }
 
         h1 {
             font-size: 48px;
-            margin-bottom: 20px;
+            color: #fff;
+            margin-bottom: 30px;
             text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.3);
+            letter-spacing: 2px;
+            transition: transform 0.5s ease-in-out;
+        }
+
+        h1:hover {
+            transform: scale(1.1);
         }
 
         input[type="password"] {
-            padding: 10px;
-            font-size: 18px;
+            padding: 15px;
+            font-size: 20px;
             border: none;
-            border-radius: 5px;
+            border-radius: 8px;
             width: 300px;
             margin: 10px auto;
             display: block;
+            background-color: #fff;
+            color: #333;
+            transition: background-color 0.3s ease-in-out;
+        }
+
+        input[type="password"]:focus {
+            background-color: #f1f8e9;
+            outline: none;
         }
 
         button {
-            padding: 10px 20px;
-            font-size: 18px;
+            padding: 15px 25px;
+            font-size: 20px;
             color: white;
-            background-color: #333;
+            background-color: #388E3C;
             border: none;
-            border-radius: 5px;
+            border-radius: 8px;
             cursor: pointer;
-            transition: background-color 0.3s;
+            transition: background-color 0.3s ease-in-out;
         }
 
         button:hover {
-            background-color: #555;
+            background-color: #2c6f2f;
         }
 
         p {
             margin-top: 20px;
-            font-size: 16px;
+            font-size: 18px;
         }
 
         .error {
             color: #ff6b6b;
+            font-size: 16px;
             margin-top: 10px;
         }
 
         @keyframes fadeIn {
             from {
                 opacity: 0;
-                transform: translate(-50%, -60%);
+                transform: scale(0.5);
             }
             to {
                 opacity: 1;
-                transform: translate(-50%, -50%);
+                transform: scale(1);
             }
         }
     </style>
