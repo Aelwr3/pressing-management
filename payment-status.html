@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>خيارات الدفع</title>
+    <title>حالة الدفع</title>
     <style>
         body {
             font-family: 'Arial', sans-serif;
@@ -13,7 +13,6 @@
             margin: 0;
             padding: 0;
         }
-
         header {
             background-color: #1d4ed8;
             color: white;
@@ -21,23 +20,24 @@
             font-size: 28px;
             font-weight: bold;
         }
-
-        .payment-options {
+        .payment-container {
+            padding: 20px;
+            margin: 20px;
             background-color: #fff;
             border-radius: 10px;
-            padding: 20px;
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-            margin: 20px auto;
-            width: 90%;
             max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
         }
-
-        .payment-options h2 {
-            margin-bottom: 20px;
-            color: #333;
+        .payment-container p {
+            font-size: 18px;
+            margin: 10px 0;
         }
-
-        .payment-options button {
+        .buttons {
+            margin-top: 20px;
+        }
+        .buttons button {
             padding: 10px 20px;
             background-color: #3b82f6;
             color: white;
@@ -45,71 +45,52 @@
             border-radius: 8px;
             font-size: 18px;
             cursor: pointer;
-            transition: transform 0.3s ease, background-color 0.3s ease;
-            margin: 10px;
         }
-
-        .payment-options button:hover {
+        .buttons button:hover {
             background-color: #2563eb;
-            transform: scale(1.05);
         }
-
-        .payment-options input {
-            padding: 10px;
-            margin-top: 20px;
-            font-size: 18px;
-            border-radius: 8px;
-            border: 1px solid #d1d5db;
-        }
-
-        .status {
-            font-size: 20px;
-            font-weight: bold;
-            margin-top: 15px;
-        }
-
-        .buttons {
+        .back-button {
             margin-top: 30px;
         }
     </style>
 </head>
 <body>
-    <header>خيارات الدفع</header>
+    <header>حالة الدفع</header>
 
-    <div class="payment-options">
-        <h2>إختيار طريقة الدفع</h2>
-        <button onclick="setPaymentStatus('كلي')">الدفع كليًا</button>
-        <button onclick="showPartialPaymentInput()">الدفع جزئيًا</button>
-        <div id="partialPayment" style="display: none;">
-            <input type="number" id="partialAmount" placeholder="أدخل المبلغ المدفوع جزئيًا" />
+    <div class="payment-container">
+        <p><strong>اسم الزبون:</strong> <span id="customerName"></span></p>
+        <p><strong>الثمن الإجمالي:</strong> <span id="totalPrice"></span></p>
+        <p><strong>حالة الدفع:</strong> <span id="paymentStatus"></span></p>
+
+        <div id="partialPaymentSection">
+            <p><strong>أدخل المبلغ المدفوع:</strong></p>
+            <input type="number" id="partialPaymentAmount" placeholder="المبلغ المدفوع" />
+            <button onclick="processPartialPayment()">تسديد جزئي</button>
         </div>
-        <div class="status" id="paymentStatus"></div>
     </div>
 
     <div class="buttons">
-        <button onclick="goToInvoiceDisplay()">التالي</button>
-        <button onclick="goToCustomerSelection()">الرجوع إلى إضافة زبون</button>
+        <button onclick="window.location.href = 'invoice.html';">الرجوع إلى الفاتورة</button>
     </div>
 
     <script>
-        function setPaymentStatus(status) {
-            const invoiceData = JSON.parse(localStorage.getItem("invoiceData")) || {};
-            invoiceData.paidStatus = status === 'كلي' ? "تم الدفع بالكامل" : "تم الدفع جزئيًا";
-            localStorage.setItem("invoiceData", JSON.stringify(invoiceData));
+        const invoice = JSON.parse(localStorage.getItem('currentInvoice'));
 
-            document.getElementById("paymentStatus").textContent = invoiceData.paidStatus;
-        }
+        document.getElementById('customerName').textContent = invoice.customerName;
+        document.getElementById('totalPrice').textContent = invoice.totalPrice + " درهم";
+        document.getElementById('paymentStatus').textContent = invoice.paymentStatus;
 
-        function showPartialPaymentInput() {
-            document.getElementById("partialPayment").style.display = "block";
-        }
-
-        function goToInvoiceDisplay() {
-            window.location.href = "invoice-display.html";
-        }
-
-        function goToCustomerSelection() {
-            window.location.href = "customer-selection.html";
+        function processPartialPayment() {
+            const partialAmount = parseFloat(document.getElementById('partialPaymentAmount').value);
+            if (partialAmount && partialAmount < invoice.totalPrice) {
+                invoice.paymentStatus = "جزئي";
+                invoice.totalPrice -= partialAmount;
+                localStorage.setItem('currentInvoice', JSON.stringify(invoice));
+                document.getElementById('totalPrice').textContent = invoice.totalPrice + " درهم";
+                document.getElementById('paymentStatus').textContent = "مدفوع جزئي";
+            } else {
+                alert("الرجاء إدخال قيمة أقل من الثمن الإجمالي");
+            }
         }
     </script>
 </body>
